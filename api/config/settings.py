@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
     "rest_framework",
-    "auth",
+    "account",
     "clinic",
     "tests",
 ]
@@ -95,7 +95,7 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 
-AUTH_USER_MODEL = "auth.User"
+AUTH_USER_MODEL = "account.User"
 
 LANGUAGE_CODE = "en-us"
 

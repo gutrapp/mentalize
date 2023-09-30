@@ -1,7 +1,5 @@
 from django.db import models
 
-from django.db import models
-
 
 class Address(models.Model):
     SANTA_CATARINA = "SC"

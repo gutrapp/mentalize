@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from django.db import models
 
-from auth.models import Person
+from account.models import Person
 from clinic.models import Clinic
 
 
