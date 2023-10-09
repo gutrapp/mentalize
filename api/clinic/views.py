@@ -1,6 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .models import Clinic, Address, Cellphone
 from .filters import ClinicFilter, AddressFilter, CellphoneFilter
@@ -14,6 +16,15 @@ class ClinicViews(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = "__all__"
     ordering = ["id"]
+
+    @action(detail=False, methods=["GET"], name="Get admin clinics")
+    def admin_clinics(self, request, *args, **kwargs):
+        try:
+            user = request.user
+            serializer = ClinicSerializer(user.admin.clinic.all(), many=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class AddressViews(viewsets.ModelViewSet):

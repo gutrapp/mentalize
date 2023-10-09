@@ -56,7 +56,7 @@ export const Home = () => {
   });
 
   return (
-    <main className="m-20 text-[#494949]">
+    <main className="m-20 text-[#414042]">
       <DataTable>
         <DataTableHead>
           <DataTableHeadLabels>

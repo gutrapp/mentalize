@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[#514456] text-white hover:bg-[#514956] focus:ring-2 focus:ring-[#9883a5] focus:ring-offset-2",
+          "bg-[#534559] text-white hover:bg-[#6C5873V] focus:ring-2 focus:ring-[#816F86] focus:ring-offset-2",
         secondary:
           "bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-400 focus:ring-offset-2",
         outline:

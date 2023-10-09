@@ -1,20 +1,27 @@
 import React from "react";
+import { cn } from "../../helpers/cn.helper";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   title: string;
 }
 
-export const Input = ({ title, type, onChange, value }: InputProps) => {
+export const Input = ({
+  title,
+  type,
+  onChange,
+  value,
+  className,
+}: InputProps) => {
   return (
-    <div className="text-[#494949] relative text-sm">
-      <h1 className="absolute text-[#9883a5] bg-white ml-1 px-1 -top-3.5">
+    <div className={cn("text-[#414042] relative text-sm", className)}>
+      <h1 className="absolute text-[#534559] bg-white ml-1 px-1 -top-3.5">
         {title}
       </h1>
       <input
         type={type}
         onChange={onChange}
         value={value}
-        className="inline-flex items-center justify-center outline-none rounded-md text-lg font-medium transition-colors ring-2 ring-[#9883a5] ring-offset-2"
+        className="flex w-full items-center justify-center outline-none rounded-md text-lg font-medium ring-2 ring-[#534559] ring-offset-2"
       />
     </div>
   );

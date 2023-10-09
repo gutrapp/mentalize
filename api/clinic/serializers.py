@@ -3,12 +3,6 @@ from rest_framework import serializers
 from .models import Clinic, Address, Cellphone
 
 
-class ClinicSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Clinic
-        fields = "__all__"
-
-
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
@@ -18,4 +12,13 @@ class AddressSerializer(serializers.ModelSerializer):
 class CellphoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cellphone
+        fields = "__all__"
+
+
+class ClinicSerializer(serializers.ModelSerializer):
+    address = AddressSerializer(allow_null=True)
+    cellphone = CellphoneSerializer(allow_null=True, many=True)
+
+    class Meta:
+        model = Clinic
         fields = "__all__"

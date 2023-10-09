@@ -3,28 +3,24 @@ from rest_framework.routers import SimpleRouter
 
 from .views import (
     PersonViews,
-    LogoutPerson,
+    UserViews,
     RegisterPerson,
-    LoginPerson,
-    UseSessionPerson,
-    LogoutAdmin,
-    GetCSRFTokenAdmin,
-    LoginAdmin,
-    UseSessionAdmin,
+    Login,
+    Logout,
+    GetCSRFToken,
+    UseSession,
 )
 
 
 router = SimpleRouter(trailing_slash=False)
 
 router.register(r"person", PersonViews, basename="person")
+router.register(r"user", UserViews, basename="person")
 
 urlpatterns = [
-    path("auth/logout/person", LogoutPerson.as_view()),
-    path("auth/register/person", RegisterPerson.as_view()),
-    path("auth/login/person", LoginPerson.as_view()),
-    path("auth/session/person", UseSessionPerson.as_view()),
-    path("auth/logout/admin", LogoutAdmin.as_view()),
-    path("auth/csrf/admin", GetCSRFTokenAdmin.as_view()),
-    path("auth/login/admin", LoginAdmin.as_view()),
-    path("auth/session/admin", UseSessionAdmin.as_view()),
+    path("auth/csrf", GetCSRFToken.as_view()),
+    path("auth/logout", Logout.as_view()),
+    path("auth/session", UseSession.as_view()),
+    path("auth/login", Login.as_view()),
+    path("auth/register", RegisterPerson.as_view()),
 ]

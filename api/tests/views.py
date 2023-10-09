@@ -3,7 +3,13 @@ from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 
 from .models import Result, Life, LoveLanguage, Mbti, SelfKnowledge
-from .filters import ResultFilter
+from .filters import (
+    LifeFilter,
+    LoveLanguageFilter,
+    SelfKnowledgeFilter,
+    MbtiFilter,
+    ResultFilter,
+)
 from .serializers import (
     LifeSerializer,
     LoveLanguageSerializer,

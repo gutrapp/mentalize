@@ -18,12 +18,26 @@ class Result(models.Model):
         (LIFE, "Vida"),
     ]
 
+    EXPIRED = "EX"
+    VALID = "VA"
+    SITUACAO_EXPIRACAO = [(EXPIRED, "Expirado"), (VALID, "Válido")]
+
+    USADO = "US"
+    NAO_USADO = "NU"
+    SITUACAO_TESTE = [(USADO, "Usado"), (NAO_USADO, "Não usado")]
+
+    VISTO = "VI"
+    NAO_VISTO = "NV"
+    SITUACAO_REVIEW = [(VISTO, "Visto"), (NAO_VISTO, "Não visto")]
+
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    expired = models.BooleanField(default=False)
-    testTaken = models.BooleanField(default=False)
+    expired = models.CharField(max_length=2, choices=SITUACAO_EXPIRACAO, default=VALID)
+    testTaken = models.CharField(
+        max_length=2, choices=SITUACAO_TESTE, default=NAO_USADO
+    )
     test = models.CharField(choices=TESTS, max_length=2)
     key = models.CharField(max_length=50, unique=True)
-    seen = models.BooleanField(default=False)
+    seen = models.CharField(max_length=2, choices=SITUACAO_REVIEW, default=NAO_VISTO)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True, null=True, blank=True)
     expires_at = models.DateField(

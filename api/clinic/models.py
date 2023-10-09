@@ -60,7 +60,7 @@ class Address(models.Model):
     ]
 
     cep = models.CharField(max_length=8)
-    number = models.IntegerField()
+    number = models.CharField(max_length=10)
     street = models.CharField(max_length=50)
     neighboorhood = models.CharField(max_length=50)
     city = models.CharField(max_length=50)

@@ -38,7 +38,7 @@ class Admin(models.Model):
         (OPERATOR, "Operador"),
     ]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="admin")
     group = models.CharField(max_length=2, choices=GROUP_CHOICES)
     role = models.CharField(max_length=2, choices=ROLE_CHOICES)
     clinic = models.ManyToManyField(Clinic, blank=True)
@@ -52,8 +52,8 @@ class Person(models.Model):
         (FEMALE, "Feminino"),
     ]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
-    cpf = models.CharField(max_length=12, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="person")
+    cpf = models.CharField(max_length=11, unique=True)
     age = models.IntegerField()
     sex = models.CharField(max_length=2, choices=SEX_CHOICES)
     address = models.ManyToManyField(Address, blank=True)
