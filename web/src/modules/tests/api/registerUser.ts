@@ -14,10 +14,15 @@ export type RegisterUserData = {
 export const registerUser = async (
   data: RegisterUserData
 ): Promise<boolean | void> => {
-  return api.get("auth/csrf").then((response) => {
-    if (response.status === 200)
-      api
-        .post("aut/register", data)
-        .then((response) => response.status === 200);
-  });
+  try {
+    return api.get("auth/csrf").then((response) => {
+      if (response.status !== 200) throw new Error(response.statusText);
+      api.post("auth/register", data).then((response) => {
+        if (response.status !== 200) throw new Error(response.statusText);
+        return true;
+      });
+    });
+  } catch (error) {
+    return Promise.reject();
+  }
 };
