@@ -1,3 +1,5 @@
+import { AdminContextProvider } from "../../../context/AdminContext";
+import { PersonContextProvider } from "../../../context/PersonContext";
 import { Admin } from "../pages/Admin";
 import { Home } from "../pages/Home";
 import { Register } from "../pages/Register";
@@ -5,14 +7,26 @@ import { Register } from "../pages/Register";
 export const TESTS_ROUTES = [
   {
     route: "/",
-    element: <Home />,
+    element: (
+      <PersonContextProvider>
+        <Home />
+      </PersonContextProvider>
+    ),
   },
   {
     route: "/register",
-    element: <Register />,
+    element: (
+      <PersonContextProvider>
+        <Register />
+      </PersonContextProvider>
+    ),
   },
   {
     route: "/admin",
-    element: <Admin />,
+    element: (
+      <AdminContextProvider>
+        <Admin />
+      </AdminContextProvider>
+    ),
   },
 ];
