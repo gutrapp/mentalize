@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Life, LoveLanguage, Mbti, SelfKnowledge, Result
+from account.serializers import PersonSerializer
 
 
 class LifeSerializer(serializers.ModelSerializer):
@@ -28,6 +29,12 @@ class LoveLanguageSerializer(serializers.ModelSerializer):
 
 
 class ResultSerializer(serializers.ModelSerializer):
+    person = PersonSerializer(read_only=True, allow_null=True)
+    mbti = MbtiSerializer(read_only=True, allow_null=True)
+    life = LifeSerializer(read_only=True, allow_null=True)
+    love_language = LoveLanguageSerializer(read_only=True, allow_null=True)
+    self_knowledge = SelfKnowledgeSerializer(read_only=True, allow_null=True)
+
     class Meta:
         model = Result
         fields = "__all__"

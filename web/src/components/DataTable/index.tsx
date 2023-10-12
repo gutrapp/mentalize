@@ -5,5 +5,5 @@ type DataTableProps = {
 };
 
 export function DataTable({ children }: DataTableProps) {
-  return <table className="rounded-full border p-2">{children}</table>;
+  return <table className="border p-2 bg-white w-full">{children}</table>;
 }

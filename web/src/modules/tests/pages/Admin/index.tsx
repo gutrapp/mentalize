@@ -1,15 +1,19 @@
 import { FormEvent, useContext, useState } from "react";
 import { Button } from "../../../../components/Button/Button";
 import { Input } from "../../../../components/Input";
-import { LoginData, login } from "../../api/login";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../../../../context/AdminContext";
 import api from "../../../../api/api.config";
 
-export const Admin = () => {
+type LoginData = {
+  email: string;
+  password: string;
+};
+
+export const AdminLogin = () => {
   const router = useNavigate();
 
-  const { setAdmin } = useContext(AdminContext);
+  const { setCurrentAdmin } = useContext(AdminContext);
 
   const [data, setData] = useState<LoginData>({
     email: "",
@@ -21,15 +25,19 @@ export const Admin = () => {
   const handleLoginAdmin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await api.get("auth/csrf").then(() =>
-      api.post("auth/login", data).then((response) => {
-        const { group } = response.data;
-
-        if (group === "G") router("/global");
-
-        if (group === "C") router("/clinic");
-      })
-    );
+    try {
+      return api.get("auth/csrf").then((response) => {
+        if (response.status !== 200) throw new Error(response.statusText);
+        api.post("auth/login", data).then((response) => {
+          if (response.status !== 200) throw new Error(response.statusText);
+          const { id, group, role } = response.data;
+          setCurrentAdmin({ id, group, role });
+          router("/clinic");
+        });
+      });
+    } catch (error) {
+      return Promise.reject();
+    }
   };
 
   return (

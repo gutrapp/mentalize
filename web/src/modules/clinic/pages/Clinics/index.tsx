@@ -7,12 +7,12 @@ import { FaClinicMedical } from "react-icons/fa";
 export const Clinics = () => {
   const router = useNavigate();
 
-  const { setClinic } = useContext(ClinicContext);
+  const { setCurrentClinic } = useContext(ClinicContext);
 
   const { clinics } = useClinics();
 
   const handleRedirectToClinic = (index: number) => {
-    setClinic(clinics[index]);
+    setCurrentClinic(clinics[index]);
     router("/clinic/keys");
   };
 

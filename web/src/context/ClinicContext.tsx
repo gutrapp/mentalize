@@ -1,30 +1,56 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useCallback, useMemo } from "react";
 import { Clinic } from "../models/clinic";
 
 type ClinicContextProviderProps = {
   children: React.ReactNode;
 };
 
-export const clinicInitialState: Clinic = {
-  id: 0,
-  name: "",
+const emptyClinic: Clinic = { id: 0, name: "" };
+
+export const clinicContextInitial: ClinicContextProps = {
+  getCurrentClinic: () => emptyClinic,
+  setCurrentClinic: () => {},
+  removeCurrentClinic: () => {},
 };
 
-export const ClinicContext = createContext<{
-  clinic: Clinic;
-  setClinic: React.Dispatch<React.SetStateAction<Clinic>>;
-}>({
-  clinic: clinicInitialState,
-  setClinic: () => {},
-});
+type ClinicContextProps = {
+  getCurrentClinic: () => Clinic;
+  setCurrentClinic: (selectClinic: Clinic) => void;
+  removeCurrentClinic: () => void;
+};
+
+export const ClinicContext =
+  createContext<ClinicContextProps>(clinicContextInitial);
 
 export const ClinicContextProvider = ({
   children,
 }: ClinicContextProviderProps) => {
-  const [clinic, setClinic] = useState<Clinic>(clinicInitialState);
+  const getCurrentClinic = useCallback((): Clinic => {
+    const storedClinic = localStorage.getItem("clinic");
+    if (!storedClinic) return emptyClinic;
+    return JSON.parse(storedClinic) as Clinic;
+  }, []);
+
+  const setCurrentClinic = useCallback((selectClinic: Clinic) => {
+    if (!!localStorage.getItem("clinic")) return;
+    localStorage.setItem("clinic", JSON.stringify(selectClinic));
+  }, []);
+
+  const removeCurrentClinic = useCallback(() => {
+    if (!localStorage.getItem("clinic")) return;
+    localStorage.removeItem("clinic");
+  }, []);
+
+  const clinicContext = useMemo(() => {
+    return {
+      getCurrentClinic,
+      setCurrentClinic,
+      removeCurrentClinic,
+    };
+  }, []);
 
   return (
-    <ClinicContext.Provider value={{ clinic, setClinic }}>
+    <ClinicContext.Provider value={clinicContext}>
       {children}
     </ClinicContext.Provider>
   );

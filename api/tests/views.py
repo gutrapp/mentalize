@@ -1,3 +1,4 @@
+from django.db.models import Subquery
 from rest_framework import viewsets
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter

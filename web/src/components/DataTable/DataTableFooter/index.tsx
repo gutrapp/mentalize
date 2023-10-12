@@ -7,11 +7,12 @@ type Choice = {
 };
 
 type DataTableFooterProps = {
-  value: number;
+  value: string;
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
   choices: Choice[];
   colSpan: number;
   resource: string;
+  variant: "default" | "min-w";
 };
 
 export const DataTableFooter = ({
@@ -20,16 +21,18 @@ export const DataTableFooter = ({
   choices,
   colSpan,
   resource,
+  variant,
 }: DataTableFooterProps) => {
   return (
     <tfoot className="border-t">
       <tr>
-        <td colSpan={colSpan}>
+        <td className="px-2 py-1" colSpan={colSpan}>
           Quantidade de {resource}:
           <DataTableSelect
             value={value}
             onChange={onChange}
             choices={choices}
+            variant={variant}
           />
         </td>
       </tr>

@@ -3,11 +3,11 @@ import { User } from "../../../../models/user";
 import { Person } from "../../../../models/person";
 import { Address, StateChoices } from "../../../../models/address";
 import { Cellphone } from "../../../../models/cellphone";
-import { registerUser } from "../../api/registerUser";
 import { useNavigate } from "react-router-dom";
 import { Input } from "../../../../components/Input";
 import { Select } from "../../../../components/Select/Select";
 import { Button } from "../../../../components/Button/Button";
+import api from "../../../../api/api.config";
 
 type ErrorType = {
   section: "address" | "info" | "cellphone";
@@ -131,8 +131,24 @@ export const Register = () => {
       return;
     }
 
-    if (await registerUser({ user, person, address, cellphone }))
-      router("/login");
+    try {
+      return api.get("auth/csrf").then((response) => {
+        if (response.status !== 200) throw new Error(response.statusText);
+        api
+          .post("auth/register", {
+            ...user,
+            ...person,
+            ...cellphone,
+            ...address,
+          })
+          .then((response) => {
+            if (response.status !== 200) throw new Error(response.statusText);
+            router("/login");
+          });
+      });
+    } catch (error) {
+      return Promise.reject();
+    }
   };
 
   return (

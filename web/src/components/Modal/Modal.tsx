@@ -19,7 +19,7 @@ export const Modal = ({ open, setOpen, children, label }: ModalProps) => {
 
   return (
     <div className="fixed flex inset-0 items-center justify-center h-screen bg-black backdrop-blur-sm text-[#414042] bg-opacity-70">
-      <div className="bg-white rounded-md ring-2 ring-offset-2 ring-white px-10 py-5 w-min">
+      <div className="bg-white rounded-md ring-2 ring-offset-2 ring-white px-10 py-5 w-[500px] h-fit">
         <div>
           <button onClick={() => setOpen(!open)} className="text-[#6C5873V]">
             <IoMdCloseCircleOutline size={30} />

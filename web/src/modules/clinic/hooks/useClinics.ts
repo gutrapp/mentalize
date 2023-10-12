@@ -4,12 +4,12 @@ import { getClinics } from "../api/getClinics";
 import { AdminContext } from "../../../context/AdminContext";
 
 export const useClinics = () => {
-  const { admin } = useContext(AdminContext);
+  const { getCurrentAdmin } = useContext(AdminContext);
 
   const [clinics, setClinics] = useState<Clinic[]>([]);
 
   useEffect(() => {
-    getClinics(admin).then((clinics) => {
+    getClinics(getCurrentAdmin()).then((clinics) => {
       setClinics(clinics);
     });
   }, []);
