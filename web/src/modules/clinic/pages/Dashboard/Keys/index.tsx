@@ -8,7 +8,7 @@ import { DataTableHeadLabels } from "../../../../../components/DataTable/DataTab
 import { DataTableInput } from "../../../../../components/DataTable/Input";
 import { DataTableSelect } from "../../../../../components/DataTable/Select";
 import { BsSquare } from "react-icons/bs";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import {
   EXPIRATION_CHOICES,
   PAGINATION_CHOICES,
@@ -43,7 +43,19 @@ export const Keys = () => {
 
   const { getCurrentAdmin } = useContext(AdminContext);
 
-  const { keys, fetchKeys } = useKeys();
+  const [params, setParams] = useState<Params>({
+    pagination: "25",
+    expired: "",
+    testTaken: "",
+    key: "",
+    seen: "",
+    created_at: "",
+    expires_at: "",
+    person: "",
+    test: "",
+  });
+
+  const { keys, fetchKeys } = useKeys(params);
 
   const { people } = useAvailablePeople();
 
@@ -61,10 +73,6 @@ export const Keys = () => {
     cpf: string;
     email: string;
   }>({ cpf: "", email: "" });
-
-  const [params, setParams] = useState<Params>({
-    pagination: "25",
-  });
 
   const handleKeyRedirect = ({ id }: Redirect) => {
     router(`/clinic/keys/${id}`);
@@ -184,25 +192,85 @@ export const Keys = () => {
             </DataTableHeadLabels>
             <DataTableHeadFilters>
               <td className="border-r px-2 pb-1">
-                <DataTableSelect choices={USABILITY_CHOICES} />
+                <DataTableSelect
+                  choices={USABILITY_CHOICES}
+                  value={params.testTaken}
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      testTaken: e.target.value as "US" | "NU" | "",
+                    })
+                  }
+                />
               </td>
               <td className="border-r px-2 pb-1">
-                <DataTableInput />
+                <DataTableInput
+                  value={params.person}
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      person: e.target.value,
+                    })
+                  }
+                />
               </td>
               <td className="border-r px-2 pb-1">
-                <DataTableInput />
+                <DataTableInput
+                  value={params.key}
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      key: e.target.value,
+                    })
+                  }
+                />
               </td>
               <td className="border-r px-2 pb-1">
-                <DataTableSelect choices={TEST_CHOICES} />
+                <DataTableSelect
+                  choices={TEST_CHOICES}
+                  value={params.test}
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      test: e.target.value as "MB" | "SK" | "LO" | "LI" | "",
+                    })
+                  }
+                />
               </td>
               <td className="border-r px-2 pb-1">
-                <DataTableSelect choices={REVIEW_CHOICES} />
+                <DataTableSelect
+                  choices={REVIEW_CHOICES}
+                  value={params.seen}
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      seen: e.target.value as "VI" | "" | "NV",
+                    })
+                  }
+                />
               </td>
               <td className="border-r px-2 pb-1">
-                <DataTableSelect choices={EXPIRATION_CHOICES} />
+                <DataTableSelect
+                  choices={EXPIRATION_CHOICES}
+                  value={params.expired}
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      expired: e.target.value as "EX" | "" | "VA",
+                    })
+                  }
+                />
               </td>
               <td className="border-r">
-                <DataTableInput />
+                <DataTableInput
+                  value={params.expires_at}
+                  onChange={(e) =>
+                    setParams({
+                      ...params,
+                      expires_at: e.target.value,
+                    })
+                  }
+                />
               </td>
             </DataTableHeadFilters>
           </DataTableHead>

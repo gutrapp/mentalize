@@ -231,7 +231,7 @@ export const Key = () => {
           </div>
         </div>
         {key.testTaken === "US" && (
-          <div className="text-[#414042] bg-white rounded-md border w-full p-5">
+          <div className="text-[#414042] bg-white rounded-md border w-full p-5 mb-7">
             <div
               className="mb-12"
               onClick={() => router(`/clinic/tests/${key.person.id}`)}

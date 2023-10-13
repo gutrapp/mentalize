@@ -1,6 +1,5 @@
 import { Admin } from "../../../models/admin";
 import { Clinic } from "../../../models/clinic";
-import { Key } from "../../../models/key";
 import { Person } from "../../../models/person";
 import { User } from "../../../models/user";
 import { Mbti } from "../../../models/mbti";
@@ -12,6 +11,14 @@ import { Cellphone } from "../../../models/cellphone";
 
 export type Params = {
   pagination: string;
+  person: string;
+  expired: "EX" | "" | "VA";
+  testTaken: "US" | "" | "NU";
+  key: string;
+  seen: "VI" | "" | "NV";
+  test: "MB" | "SK" | "LO" | "LI" | "";
+  created_at: string;
+  expires_at: string;
 };
 
 export type Redirect = {

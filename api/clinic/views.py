@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status
+from django.http import QueryDict
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework.decorators import action
@@ -39,7 +40,17 @@ class ClinicViews(viewsets.ModelViewSet):
     def clinic_results(self, request, pk, *args, **kwargs):
         try:
             data = []
-            results = Clinic.objects.filter(id=pk).first().result_set.all()
+            filters = {k: v for k, v in QueryDict.copy(request.GET).items()}
+            limit = int(filters.pop("limit"))
+            offset = int(filters.pop("offset"))
+            results = (
+                Clinic.objects.filter(id=pk)
+                .first()
+                .result_set.all()
+                .filter(**{f"{k}__icontains": v for k, v in filters.items()})[
+                    offset : offset + limit
+                ]
+            )
             for result in results:
                 data.append(
                     {
@@ -48,7 +59,8 @@ class ClinicViews(viewsets.ModelViewSet):
                     }
                 )
             return Response(data=data, status=status.HTTP_200_OK)
-        except:
+        except Exception as e:
+            print(e)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @action(
