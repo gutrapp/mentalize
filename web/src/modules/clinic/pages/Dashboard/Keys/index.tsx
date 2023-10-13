@@ -25,15 +25,16 @@ import { AdminContext } from "../../../../../context/AdminContext";
 import { Input } from "../../../../../components/Input";
 import { Select } from "../../../../../components/Select/Select";
 import api from "../../../../../api/api.config";
-import {
-  Params,
-  PersonRedirect,
-  Redirect,
-  TestRedirect,
-} from "../../../types/keys.types";
+import { Params, Redirect } from "../../../types/keys.types";
 import { useAvailablePeople } from "../../../hooks/useAvailablePeople";
-import { cpfFormatacao } from "../../../../tests/pages/Register";
 import { ClinicContext } from "../../../../../context/ClinicContext";
+import {
+  EXPIRATION_DICT,
+  REVIEW_DICT,
+  TEST_DICT,
+  USABILITY_DICT,
+} from "../../../../../helpers/dict.helper";
+import { cpfFormatacao } from "../../../../../helpers/formatters.helper";
 
 export const Keys = () => {
   const router = useNavigate();
@@ -69,30 +70,6 @@ export const Keys = () => {
     router(`/clinic/keys/${id}`);
   };
 
-  const handlePersonRedirect = ({ person }: PersonRedirect) => {
-    router(`/clinic/people/${person.id}`);
-  };
-
-  const handleTestRedirect = ({ key }: TestRedirect) => {
-    console.log(key);
-    if (key.testTaken === "NU") router(`/clinic/keys/${key.id}`);
-
-    switch (key.test) {
-      case "MB":
-        router(`/clinic/test/${key.mbti.id}/${key.test}`);
-        break;
-      case "SK":
-        router(`/clinic/test/${key.self_knowledge.id}/${key.test}`);
-        break;
-      case "LI":
-        router(`/clinic/test/${key.life.id}/${key.test}`);
-        break;
-      case "LO":
-        router(`/clinic/test/${key.love_language.id}/${key.test}`);
-        break;
-    }
-  };
-
   const handleCreateKey = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -103,7 +80,12 @@ export const Keys = () => {
     };
 
     return await api.post("result", data).then((response) => {
-      if (response.status === 200) fetchKeys();
+      if (response.status === 201) {
+        fetchKeys();
+        setOpen(!open);
+        setPersonFilter({ cpf: "", email: "" });
+        setKey({ key: "", test: "MB" });
+      }
     });
   };
 
@@ -119,8 +101,8 @@ export const Keys = () => {
 
   return (
     <Layout>
-      <main className="text-[#414042] m-5 bg-white border h-full w-full px-5 py-5 mt-[80px]">
-        <h1 className="text-[#BB926B] text-4xl mb-12 font-bold">Chaves</h1>
+      <main className="text-[#414042] m-5 bg-white rounded-md border h-full w-full px-5 py-5 mt-[80px]">
+        <h1 className="text-[#BB926B] text-4xl mb-10 font-bold">Chaves</h1>
         {getCurrentAdmin().role === "A" && (
           <div className="mb-2 w-full flex justify-end gap-2">
             <Modal label="Criar chave" open={open} setOpen={setOpen}>
@@ -232,45 +214,45 @@ export const Keys = () => {
                 </td>
                 <td
                   className="text-center border"
-                  onClick={() => handleTestRedirect({ key })}
+                  onClick={() => handleKeyRedirect(key)}
                 >
-                  {key.testTaken}
+                  {USABILITY_DICT[key.testTaken]}
                 </td>
                 <td
-                  onClick={() => handlePersonRedirect({ person: key.person })}
                   className="text-center border"
+                  onClick={() => handleKeyRedirect(key)}
                 >
                   {key.person.user.first_name} {key.person.user.last_name}
                 </td>
                 <td
                   className="text-center border"
-                  onClick={() => handleKeyRedirect({ id: key.id })}
+                  onClick={() => handleKeyRedirect(key)}
                 >
                   {key.key}
                 </td>
                 <td
                   className="text-center border"
-                  onClick={() => handleKeyRedirect({ id: key.id })}
+                  onClick={() => handleKeyRedirect(key)}
                 >
-                  {key.test}
+                  {TEST_DICT[key.test]}
                 </td>
                 <td
                   className="text-center border"
-                  onClick={() => handleKeyRedirect({ id: key.id })}
+                  onClick={() => handleKeyRedirect(key)}
                 >
-                  {key.seen}
+                  {REVIEW_DICT[key.seen]}
                 </td>
                 <td
                   className="text-center border"
-                  onClick={() => handleKeyRedirect({ id: key.id })}
+                  onClick={() => handleKeyRedirect(key)}
                 >
-                  {key.expired}
+                  {EXPIRATION_DICT[key.expired]}
                 </td>
                 <td
                   className="text-center border"
-                  onClick={() => handleKeyRedirect({ id: key.id })}
+                  onClick={() => handleKeyRedirect(key)}
                 >
-                  {key.expires_at.toString()}
+                  {key.expires_at}
                 </td>
               </tr>
             ))}

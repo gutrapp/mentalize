@@ -8,63 +8,20 @@ import { Input } from "../../../../components/Input";
 import { Select } from "../../../../components/Select/Select";
 import { Button } from "../../../../components/Button/Button";
 import api from "../../../../api/api.config";
+import {
+  cepFormatacao,
+  cpfFormatacao,
+} from "../../../../helpers/formatters.helper";
+import {
+  SEX_CHOICES,
+  STATE_CHOICES,
+  TELEFONE_CHOICES,
+} from "../../../../helpers/choices.helper";
 
 type ErrorType = {
   section: "address" | "info" | "cellphone";
   msg: string;
 };
-
-const STATE_CHOICES = [
-  { value: "SC", choice: "Santa Catarina" },
-  { value: "RS", choice: "Rio Grande do Sul" },
-  { value: "PR", choice: "Paraná" },
-  { value: "SP", choice: "São Paulo" },
-  { value: "RJ", choice: "Rio de Janeiro" },
-  { value: "DF", choice: "Distrito Federal" },
-  { value: "MT", choice: "Mato Grosso" },
-  { value: "MS", choice: "Mato Grosso do Sul" },
-  { value: "GO", choice: "Goiás" },
-  { value: "AC", choice: "Acre" },
-  { value: "AL", choice: "Alagoas" },
-  { value: "AP", choice: "Amapá" },
-  { value: "AM", choice: "Amazonas" },
-  { value: "BA", choice: "Bahia" },
-  { value: "CE", choice: "Ceará" },
-  { value: "ES", choice: "Espirito Santo" },
-  { value: "MG", choice: "Minas Gerais" },
-  { value: "MA", choice: "Maranhão" },
-  { value: "PA", choice: "Pará" },
-  { value: "PB", choice: "Paraíba" },
-  { value: "PE", choice: "Pernambuco" },
-  { value: "PI", choice: "Piauí" },
-  { value: "RN", choice: "Rio Grande do Norte" },
-  { value: "RO", choice: "Rôndonia" },
-  { value: "RR", choice: "Roraima" },
-  { value: "SE", choice: "Sergipe" },
-  { value: "TO", choice: "Tocantins" },
-];
-
-const TELEFONE_CHOICES = [
-  {
-    value: "MO",
-    choice: "Celular",
-  },
-  {
-    value: "FX",
-    choice: "Fixo",
-  },
-];
-
-const SEX_CHOICES = [
-  {
-    choice: "Masculino",
-    value: "M",
-  },
-  {
-    choice: "Feminino",
-    value: "F",
-  },
-];
 
 export const Register = () => {
   const router = useNavigate();
@@ -356,16 +313,4 @@ export const Register = () => {
       </form>
     </main>
   );
-};
-
-export const cpfFormatacao = (value: string) => {
-  if (!value) return "";
-  if (!value.match(/[0-9]+/)) return "";
-  return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-};
-
-export const cepFormatacao = (value: string) => {
-  if (!value) return "";
-  if (!value.match(/[0-9]+/)) return "";
-  return value.replace(/(\d{5})(\d{3})/, "$1-$2");
 };

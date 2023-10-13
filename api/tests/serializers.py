@@ -29,7 +29,12 @@ class LoveLanguageSerializer(serializers.ModelSerializer):
 
 
 class ResultSerializer(serializers.ModelSerializer):
-    person = PersonSerializer(read_only=True, allow_null=True)
+    created_at = serializers.DateField(
+        format="%d/%m/%Y", input_formats=["%d-%m-%Y", "iso-8601"]
+    )
+    expires_at = serializers.DateField(
+        format="%d/%m/%Y", input_formats=["%d-%m-%Y", "iso-8601"]
+    )
     mbti = MbtiSerializer(read_only=True, allow_null=True)
     life = LifeSerializer(read_only=True, allow_null=True)
     love_language = LoveLanguageSerializer(read_only=True, allow_null=True)

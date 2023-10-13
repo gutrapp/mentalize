@@ -5,6 +5,6 @@ export type Key = {
   test: "MB" | "SK" | "LO" | "LI";
   key: string;
   seen: "VI" | "NV";
-  created_at: Date;
-  expires_at: Date;
+  created_at: string;
+  expires_at: string;
 };

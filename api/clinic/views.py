@@ -38,9 +38,40 @@ class ClinicViews(viewsets.ModelViewSet):
     @action(detail=True, methods=["GET"], name="Get clinics results")
     def clinic_results(self, request, pk, *args, **kwargs):
         try:
+            data = []
             results = Clinic.objects.filter(id=pk).first().result_set.all()
-            serializer = ResultSerializer(results, many=True)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            for result in results:
+                data.append(
+                    {
+                        **ResultSerializer(result).data,
+                        "person": PersonSerializer(result.person).data,
+                    }
+                )
+            return Response(data=data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(
+        detail=True,
+        methods=["GET"],
+        name="Get clinics result",
+        url_path="clinic_result/(?P<key_id>\d+)",
+    )
+    def clinic_result(self, request, pk, key_id, *args, **kwargs):
+        try:
+            result = (
+                Clinic.objects.filter(id=pk)
+                .first()
+                .result_set.filter(id=key_id)
+                .first()
+            )
+            return Response(
+                data={
+                    **ResultSerializer(result).data,
+                    "person": PersonSerializer(result.person).data,
+                },
+                status=status.HTTP_200_OK,
+            )
         except:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

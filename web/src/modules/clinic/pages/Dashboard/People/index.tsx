@@ -1,3 +1,9 @@
+import { Layout } from "../../../components/Layout";
+
 export const People = () => {
-    return <main></main>
-}
+  return (
+    <Layout>
+      <main></main>
+    </Layout>
+  );
+};

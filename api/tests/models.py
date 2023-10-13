@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+import datetime
 
 from django.db import models
 
@@ -41,7 +41,9 @@ class Result(models.Model):
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True, null=True, blank=True)
     expires_at = models.DateField(
-        default=datetime.now() + timedelta(days=30), null=True, blank=True
+        default=datetime.date.today() + datetime.timedelta(days=30),
+        null=True,
+        blank=True,
     )
 
 

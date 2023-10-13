@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useMemo } from "react";
 import { Person } from "../models/person";
+import { useNavigate } from "react-router-dom";
 
 type PersonContextProviderProps = {
   children: React.ReactNode;
@@ -25,9 +26,14 @@ export const PersonContext =
 export const PersonContextProvider = ({
   children,
 }: PersonContextProviderProps) => {
+  const router = useNavigate();
+
   const getCurrentPerson = useCallback((): Person => {
     const storedPerson = localStorage.getItem("person");
-    if (!storedPerson) return emptyPerson;
+    if (!storedPerson) {
+      router("/");
+      return emptyPerson;
+    }
     return JSON.parse(storedPerson) as Person;
   }, []);
 

@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useMemo } from "react";
 import { Admin } from "../models/admin";
+import { useNavigate } from "react-router-dom";
 
 type AdminContextProviderProps = {
   children: React.ReactNode;
@@ -25,9 +26,14 @@ export const AdminContext =
 export const AdminContextProvider = ({
   children,
 }: AdminContextProviderProps) => {
+  const router = useNavigate();
+
   const getCurrentAdmin = useCallback((): Admin => {
     const storedAdmin = localStorage.getItem("admin");
-    if (!storedAdmin) return emptyAdmin;
+    if (!storedAdmin) {
+      router("/");
+      return emptyAdmin;
+    }
     return JSON.parse(storedAdmin) as Admin;
   }, []);
 

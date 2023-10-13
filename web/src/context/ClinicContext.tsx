@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useMemo } from "react";
 import { Clinic } from "../models/clinic";
+import { useNavigate } from "react-router-dom";
 
 type ClinicContextProviderProps = {
   children: React.ReactNode;
@@ -25,9 +26,14 @@ export const ClinicContext =
 export const ClinicContextProvider = ({
   children,
 }: ClinicContextProviderProps) => {
+  const router = useNavigate();
+
   const getCurrentClinic = useCallback((): Clinic => {
     const storedClinic = localStorage.getItem("clinic");
-    if (!storedClinic) return emptyClinic;
+    if (!storedClinic) {
+      router("/");
+      return emptyClinic;
+    }
     return JSON.parse(storedClinic) as Clinic;
   }, []);
 
