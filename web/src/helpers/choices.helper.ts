@@ -38,6 +38,14 @@ export const STATE_CHOICES = [
   { value: "TO", choice: "Tocantins" },
 ];
 
+export const MBTI_CHOICES_EMPTY = [
+  { choice: "", value: "" },
+  { value: "AR", choice: "Ar" },
+  { value: "EA", choice: "Terra" },
+  { value: "FI", choice: "Fogo" },
+  { value: "WA", choice: "Água" },
+];
+
 export const TELEFONE_CHOICES = [
   {
     value: "MO",
@@ -46,6 +54,21 @@ export const TELEFONE_CHOICES = [
   {
     value: "FX",
     choice: "Fixo",
+  },
+];
+
+export const SEX_CHOICES_EMPTY = [
+  {
+    choice: "",
+    value: "",
+  },
+  {
+    choice: "Masculino",
+    value: "M",
+  },
+  {
+    choice: "Feminino",
+    value: "F",
   },
 ];
 

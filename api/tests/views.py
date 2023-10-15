@@ -18,6 +18,7 @@ from .serializers import (
     MbtiSerializer,
     ResultSerializer,
 )
+from clinic.models import Clinic
 
 
 class ResultViews(viewsets.ModelViewSet):

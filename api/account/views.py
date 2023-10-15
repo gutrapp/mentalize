@@ -71,11 +71,11 @@ class RegisterPerson(APIView):
                         cpf=person.data["cpf"],
                         age=person.data["age"],
                         sex=person.data["sex"],
+                        address=address,
+                        cellphone=cellphone,
                         user=user,
                     )
                     person.save()
-                    person.address.add(address)
-                    person.cellphone.add(cellphone)
 
                     return Response(status=status.HTTP_200_OK)
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)

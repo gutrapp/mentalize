@@ -31,25 +31,21 @@ export const useKey = (key_id: string) => {
       cpf: "",
       age: 0,
       sex: "F",
-      address: [
-        {
-          id: 0,
-          cep: "",
-          number: "",
-          street: "",
-          neighboorhood: "",
-          city: "",
-          state: "AC",
-        },
-      ],
-      cellphone: [
-        {
-          id: 0,
-          ddd: "",
-          telefone: "",
-          type: "FX",
-        },
-      ],
+      address: {
+        id: 0,
+        cep: "",
+        number: "",
+        street: "",
+        neighboorhood: "",
+        city: "",
+        state: "AC",
+      },
+      cellphone: {
+        id: 0,
+        ddd: "",
+        telefone: "",
+        type: "FX",
+      },
       user: {
         id: 0,
         first_name: "",

@@ -16,7 +16,7 @@ export const CLINIC_ROUTES = [
     element: <Tests />,
   },
   {
-    route: "/clinic/tests/:id",
+    route: "/clinic/tests/:id/:test",
     element: <Test />,
   },
   {

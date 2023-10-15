@@ -8,7 +8,8 @@ import { DataTableHeadLabels } from "../../../../../components/DataTable/DataTab
 import { DataTableInput } from "../../../../../components/DataTable/Input";
 import { DataTableSelect } from "../../../../../components/DataTable/Select";
 import { BsSquare } from "react-icons/bs";
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
+import { FormEvent, useContext, useState } from "react";
 import {
   EXPIRATION_CHOICES,
   PAGINATION_CHOICES,
@@ -44,18 +45,20 @@ export const Keys = () => {
   const { getCurrentAdmin } = useContext(AdminContext);
 
   const [params, setParams] = useState<Params>({
-    pagination: "25",
+    offset: "0",
+    limit: "25",
     expired: "",
     testTaken: "",
     key: "",
     seen: "",
     created_at: "",
     expires_at: "",
-    person: "",
+    person__user__first_name: "",
+    person__user__last_name: "",
     test: "",
   });
 
-  const { keys, fetchKeys } = useKeys(params);
+  const { keys, fetchKeys, filterKeys } = useKeys(params);
 
   const { people } = useAvailablePeople();
 
@@ -111,9 +114,14 @@ export const Keys = () => {
     <Layout>
       <main className="text-[#414042] m-5 bg-white rounded-md border h-full w-full px-5 py-5 mt-[80px]">
         <h1 className="text-[#BB926B] text-4xl mb-10 font-bold">Chaves</h1>
-        {getCurrentAdmin().role === "A" && (
-          <div className="mb-2 w-full flex justify-end gap-2">
-            <Modal label="Criar chave" open={open} setOpen={setOpen}>
+        <div className="mb-2 w-full flex justify-end gap-2">
+          {getCurrentAdmin().role === "A" && (
+            <Modal
+              label="Criar chave"
+              open={open}
+              Icon={AiOutlinePlus}
+              setOpen={setOpen}
+            >
               <form
                 onSubmit={handleCreateKey}
                 className="flex flex-col items-start gap-[1.2rem] w-full"
@@ -173,9 +181,12 @@ export const Keys = () => {
                 </div>
               </form>
             </Modal>
-            <Button variant="secondary">Apagar chave</Button>
-          </div>
-        )}
+          )}
+          <Button onClick={filterKeys}>Filtrar</Button>
+          {getCurrentAdmin().role === "A" && (
+            <Button variant="secondary">Apagar chave(s)</Button>
+          )}
+        </div>
         <DataTable>
           <DataTableHead>
             <DataTableHeadLabels>
@@ -205,11 +216,12 @@ export const Keys = () => {
               </td>
               <td className="border-r px-2 pb-1">
                 <DataTableInput
-                  value={params.person}
+                  value={params.person__user__first_name}
                   onChange={(e) =>
                     setParams({
                       ...params,
-                      person: e.target.value,
+                      person__user__first_name: e.target.value,
+                      person__user__last_name: e.target.value,
                     })
                   }
                 />
@@ -326,12 +338,10 @@ export const Keys = () => {
             ))}
           </DataTableBody>
           <DataTableFooter
-            value={params.pagination}
+            value={params.limit}
             resource="chaves"
             colSpan={6}
-            onChange={(e) =>
-              setParams({ ...params, pagination: e.target.value })
-            }
+            onChange={(e) => setParams({ ...params, limit: e.target.value })}
             choices={PAGINATION_CHOICES}
             variant="min-w"
           />

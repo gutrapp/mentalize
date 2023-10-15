@@ -16,7 +16,6 @@ import {
   cepFormatacao,
   cpfFormatacao,
 } from "../../../../../helpers/formatters.helper";
-import { KeyResponse } from "../../../types/keys.types";
 import { MbtiResultSimplified } from "../../../components/SimplifiedResults/mbti";
 
 export const Key = () => {
@@ -158,75 +157,77 @@ export const Key = () => {
               <h1 className="font-bold text-lg border-[#534559] border-b-2 w-full text-[#534559] mb-[1rem]">
                 Telefone:
               </h1>
-              {key.person.cellphone &&
-                key.person.cellphone.map((c, i) => {
-                  return (
-                    <div key={i} className="flex flex-col gap-1">
-                      <label
-                        onClick={() => handleCopyText(TELEFONE_DICT[c.type])}
-                        className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-y"
-                      >
-                        Tipo: {TELEFONE_DICT[c.type]}
-                      </label>
-                      <label
-                        className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
-                        onClick={() =>
-                          handleCopyText(`(${c.ddd}) ${c.telefone}`)
-                        }
-                      >
-                        Telefone: ({c.ddd}) {c.telefone}
-                      </label>
-                    </div>
-                  );
-                })}
+
+              <div className="flex flex-col gap-1">
+                <label
+                  onClick={() =>
+                    handleCopyText(TELEFONE_DICT[key.person.cellphone.type])
+                  }
+                  className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-y"
+                >
+                  Tipo: {TELEFONE_DICT[key.person.cellphone.type]}
+                </label>
+                <label
+                  className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
+                  onClick={() =>
+                    handleCopyText(
+                      `(${key.person.cellphone.ddd}) ${key.person.cellphone.telefone}`
+                    )
+                  }
+                >
+                  Telefone: ({key.person.cellphone.ddd}){" "}
+                  {key.person.cellphone.telefone}
+                </label>
+              </div>
             </div>
             <div className="flex flex-col">
               <h1 className="font-bold text-lg border-[#534559] border-b-2 w-full text-[#534559] mb-[1rem]">
                 Endereço:
               </h1>
-              {key.person.address &&
-                key.person.address.map((a, i) => {
-                  return (
-                    <div key={i} className="flex flex-col gap-1">
-                      <label
-                        className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-y"
-                        onClick={() => handleCopyText(cepFormatacao(a.cep))}
-                      >
-                        CEP: {cepFormatacao(a.cep)}
-                      </label>
-                      <label
-                        onClick={() => handleCopyText(a.number)}
-                        className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
-                      >
-                        Número: {a.number}
-                      </label>
-                      <label
-                        onClick={() => handleCopyText(a.street)}
-                        className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
-                      >
-                        Rua: {a.street}
-                      </label>
-                      <label
-                        onClick={() => handleCopyText(a.neighboorhood)}
-                        className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
-                      >
-                        Bairro: {a.neighboorhood}
-                      </label>
-                      <label
-                        onClick={() => handleCopyText(a.city)}
-                        className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
-                      >
-                        Cidade: {a.city}
-                      </label>
-                      <label
-                        onClick={() => handleCopyText(STATE_DICT[a.state])}
-                        className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
-                      >
-                        Estado: {STATE_DICT[a.state]}
-                      </label>
-                    </div>
-                  );
-                })}
+              <div className="flex flex-col gap-1">
+                <label
+                  className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-y"
+                  onClick={() =>
+                    handleCopyText(cepFormatacao(key.person.address.cep))
+                  }
+                >
+                  CEP: {cepFormatacao(key.person.address.cep)}
+                </label>
+                <label
+                  onClick={() => handleCopyText(key.person.address.number)}
+                  className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
+                >
+                  Número: {key.person.address.number}
+                </label>
+                <label
+                  onClick={() => handleCopyText(key.person.address.street)}
+                  className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
+                >
+                  Rua: {key.person.address.street}
+                </label>
+                <label
+                  onClick={() =>
+                    handleCopyText(key.person.address.neighboorhood)
+                  }
+                  className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
+                >
+                  Bairro: {key.person.address.neighboorhood}
+                </label>
+                <label
+                  onClick={() => handleCopyText(key.person.address.city)}
+                  className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
+                >
+                  Cidade: {key.person.address.city}
+                </label>
+                <label
+                  onClick={() =>
+                    handleCopyText(STATE_DICT[key.person.address.state])
+                  }
+                  className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
+                >
+                  Estado: {STATE_DICT[key.person.address.state]}
+                </label>
+              </div>
             </div>
           </div>
         </div>

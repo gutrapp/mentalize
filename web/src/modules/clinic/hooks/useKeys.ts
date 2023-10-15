@@ -6,28 +6,27 @@ import { KeyResponse, Params } from "../types/keys.types";
 export const useKeys = (params: Params) => {
   const { getCurrentClinic } = useContext(ClinicContext);
 
-  const url = useRef<string>("");
-
   const [keys, setKeys] = useState<KeyResponse[]>([]);
 
-  const fetchKeys = (url?: string) => {
-    getKeys(getCurrentClinic(), url).then((response) => {
+  const url = useRef<string>("?limit=25&offset=0");
+
+  const filterKeys = () => {
+    url.current = "?";
+    const filters = Object.keys(params);
+    filters.map((key, _) => {
+      // @ts-ignore
+      if (params[key]) url.current += `&${key}=${params[key]}`;
+    });
+    fetchKeys();
+  };
+
+  const fetchKeys = () => {
+    getKeys(getCurrentClinic(), url.current).then((response) => {
       setKeys(response);
     });
   };
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      url.current = `?limit=${params.pagination}&offset=1`;
-      const filters = Object.keys(params);
-      filters.map((key, _) => {
-        if (params[key] && key !== "pagination")
-          url.current += `&${key}=${params[key]}`;
-      });
-      fetchKeys(url.current);
-    }, 3000);
-    return () => clearTimeout(delayDebounceFn);
-  }, [params]);
+  useEffect(fetchKeys, []);
 
-  return { keys, fetchKeys };
+  return { keys, fetchKeys, filterKeys };
 };

@@ -14,17 +14,17 @@ export const MbtiResultSimplified = ({ data }: { data: KeyResponse }) => {
             <AiOutlineInfoCircle size={15} /> Ranking dos tipos do cliente, o
             primeiro e o dominante
           </p>
-          <div className="flex flex-col gap-2 mx-2">
-            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b w-full text-[#BB926B]">
+          <div className="flex flex-col gap-2 mx-2 font-light">
+            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b hover:text-[#BB926B] w-full font-bold hover:scale-105 duration-300 ease-in-out">
               1°: {MBTI_DICT[data.mbti.first]}
             </label>
-            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b text-[#534559]">
+            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b hover:text-[#534559] hover:font-medium hover:scale-105 duration-300 ease-in-out ">
               2°: {MBTI_DICT[data.mbti.second]}
             </label>
-            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b">
+            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b hover:text-[#534559] hover:font-medium hover:scale-105 duration-300 ease-in-out">
               3°: {MBTI_DICT[data.mbti.third]}
             </label>
-            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b font-light">
+            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b hover:text-[#534559] hover:font-medium hover:scale-105 duration-300 ease-in-out">
               4°: {MBTI_DICT[data.mbti.fourth]}
             </label>
           </div>
@@ -36,17 +36,17 @@ export const MbtiResultSimplified = ({ data }: { data: KeyResponse }) => {
           <p className="font-light text-sm flex items-center gap-1 mb-[1rem]">
             <AiOutlineInfoCircle size={15} /> Qual a porcentagem de cada tipo
           </p>
-          <div className="flex flex-col gap-2 mx-2">
-            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b text-[#BB926B]">
+          <div className="flex flex-col gap-2 mx-2 font-light">
+            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b hover:text-[#BB926B] font-bold hover:font-medium hover:scale-105 duration-300 ease-in-out">
               {MBTI_DICT[data.mbti.first]}: {data.mbti.firstScore}%
             </label>
-            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b text-[#534559]">
+            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b hover:text-[#534559] hover:font-medium hover:scale-105 duration-300 ease-in-out">
               {MBTI_DICT[data.mbti.second]}: {data.mbti.secondScore}%
             </label>
-            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b">
+            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b hover:text-[#534559] hover:font-medium hover:scale-105 duration-300 ease-in-out">
               {MBTI_DICT[data.mbti.third]}: {data.mbti.thirdScore}%
             </label>
-            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b font-light">
+            <label className="hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b hover:text-[#534559] hover:font-medium hover:scale-105 duration-300 ease-in-out">
               {MBTI_DICT[data.mbti.fourth]}: {data.mbti.fourthScore}%
             </label>
           </div>

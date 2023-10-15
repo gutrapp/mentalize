@@ -21,8 +21,8 @@ class AdminSerializer(serializers.ModelSerializer):
 
 class PersonSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, allow_null=True)
-    address = AddressSerializer(read_only=True, allow_null=True, many=True)
-    cellphone = CellphoneSerializer(read_only=True, allow_null=True, many=True)
+    address = AddressSerializer(read_only=True, allow_null=True)
+    cellphone = CellphoneSerializer(read_only=True, allow_null=True)
 
     class Meta:
         model = Person

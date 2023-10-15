@@ -9,3 +9,7 @@ export const cepFormatacao = (value: string) => {
   if (!value.match(/[0-9]+/)) return "";
   return value.replace(/(\d{5})(\d{3})/, "$1-$2");
 };
+
+export const dateFortmatter = (data: string) => {
+  return data.split("/").reverse().join("-");
+};

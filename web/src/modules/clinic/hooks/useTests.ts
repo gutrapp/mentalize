@@ -1,23 +1,34 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ClinicContext } from "../../../context/ClinicContext";
 import { getTests } from "../api/getTests";
-import { Mbti } from "../../../models/mbti";
-import { SelfKnowledge } from "../../../models/selfKnowledge";
-import { LoveLanguage } from "../../../models/loveLanguage";
-import { Life } from "../../../models/life";
+import { ResponseMbti } from "../types/tests.type";
 
-export const useTests = (test: "MB" | "SK" | "LO" | "LI") => {
+import { Params } from "../types/tests.type";
+
+export const useTests = (test: "MB" | "SK" | "LO" | "LI", params: Params) => {
   const { getCurrentClinic } = useContext(ClinicContext);
 
-  const [tests, setTests] = useState<
-    (Mbti | SelfKnowledge | LoveLanguage | Life)[]
-  >([]);
+  const [tests, setTests] = useState<ResponseMbti[]>([]);
 
-  useEffect(() => {
-    getTests(getCurrentClinic(), test).then((response) => {
+  const url = useRef<string>("?limit=25&offset=0");
+
+  const filterTests = () => {
+    const filters = Object.keys(params);
+    url.current = "?";
+    filters.map((key, _) => {
+      // @ts-ignore
+      if (params[key]) url.current += `&${key}=${params[key]}`;
+    });
+    fetchTests();
+  };
+
+  const fetchTests = () => {
+    getTests(getCurrentClinic(), test, url.current).then((response) => {
       setTests(response);
     });
-  }, []);
+  };
 
-  return { tests };
+  useEffect(fetchTests, []);
+
+  return { tests, filterTests };
 };

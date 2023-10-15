@@ -93,10 +93,10 @@ export const Register = () => {
         if (response.status !== 200) throw new Error(response.statusText);
         api
           .post("auth/register", {
-            ...user,
-            ...person,
-            ...cellphone,
-            ...address,
+            user,
+            person,
+            cellphone,
+            address,
           })
           .then((response) => {
             if (response.status !== 200) throw new Error(response.statusText);

@@ -56,5 +56,5 @@ class Person(models.Model):
     cpf = models.CharField(max_length=11, unique=True)
     age = models.IntegerField()
     sex = models.CharField(max_length=2, choices=SEX_CHOICES)
-    address = models.ManyToManyField(Address, blank=True)
-    cellphone = models.ManyToManyField(Cellphone, blank=True)
+    address = models.OneToOneField(Address, on_delete=models.SET_NULL, null=True)
+    cellphone = models.OneToOneField(Cellphone, on_delete=models.SET_NULL, null=True)

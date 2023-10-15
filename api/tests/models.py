@@ -51,6 +51,7 @@ class Life(models.Model):
     average = models.DecimalField(max_digits=5, decimal_places=2)
     total = models.IntegerField()
     result = models.OneToOneField(Result, on_delete=models.CASCADE)
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
 
 
 class SelfKnowledge(models.Model):
@@ -74,6 +75,7 @@ class SelfKnowledge(models.Model):
     thirdScore = models.DecimalField(max_digits=5, decimal_places=2)
     fourthScore = models.DecimalField(max_digits=5, decimal_places=2)
     result = models.OneToOneField(Result, on_delete=models.CASCADE)
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
 
 
 class LoveLanguage(models.Model):
@@ -101,6 +103,7 @@ class LoveLanguage(models.Model):
     fourthScore = models.DecimalField(max_digits=5, decimal_places=2)
     fifthScore = models.DecimalField(max_digits=5, decimal_places=2)
     result = models.OneToOneField(Result, on_delete=models.CASCADE)
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
 
 
 class Mbti(models.Model):
@@ -119,3 +122,4 @@ class Mbti(models.Model):
     thirdScore = models.DecimalField(max_digits=5, decimal_places=2)
     fourthScore = models.DecimalField(max_digits=5, decimal_places=2)
     result = models.OneToOneField(Result, on_delete=models.CASCADE)
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)

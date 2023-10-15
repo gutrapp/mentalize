@@ -3,7 +3,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "../../helpers/cn.helper";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-text-lg font-medium transition-colors",
+  "inline-flex items-center gap-2 justify-center rounded-md text-text-lg font-medium transition-colors",
   {
     variants: {
       variant: {
@@ -27,13 +27,16 @@ const buttonVariants = cva(
 
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> {
+  Icon?: React.ElementType;
+}
 
 export const Button = ({
   className,
   children,
   variant,
   size,
+  Icon,
   ...props
 }: ButtonProps) => {
   return (
@@ -42,6 +45,7 @@ export const Button = ({
       {...props}
     >
       {children}
+      {Icon && <Icon />}
     </button>
   );
 };

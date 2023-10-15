@@ -10,8 +10,10 @@ import { Address } from "../../../models/address";
 import { Cellphone } from "../../../models/cellphone";
 
 export type Params = {
-  pagination: string;
-  person: string;
+  offset: string;
+  limit: string;
+  person__user__first_name: string;
+  person__user__last_name: string;
   expired: "EX" | "" | "VA";
   testTaken: "US" | "" | "NU";
   key: string;
@@ -66,8 +68,8 @@ export type KeyTest = {
 
 export type KeyResponse = KeyTest & {
   person: Person & {
-    address: Address[];
-    cellphone: Cellphone[];
+    address: Address;
+    cellphone: Cellphone;
     user: User;
   };
 };

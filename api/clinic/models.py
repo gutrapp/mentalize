@@ -83,4 +83,4 @@ class Cellphone(models.Model):
 class Clinic(models.Model):
     name = models.CharField(max_length=50)
     address = models.OneToOneField(Address, on_delete=models.SET_NULL, null=True)
-    cellphone = models.ManyToManyField(Cellphone)
+    cellphone = models.OneToOneField(Cellphone, on_delete=models.SET_NULL, null=True)
