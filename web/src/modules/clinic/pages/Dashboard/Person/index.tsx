@@ -7,8 +7,10 @@ import {
 } from "../../../../../helpers/formatters.helper";
 import {
   EXPIRATION_DICT,
+  LO_DICT,
   MBTI_DICT,
   SEX_DICT,
+  SK_DICT,
   STATE_DICT,
   TELEFONE_DICT,
   TEST_DICT,
@@ -17,6 +19,9 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useState } from "react";
 import { Mbti } from "../../../../../models/mbti";
 import { IoWarningOutline } from "react-icons/io5";
+import { Life } from "../../../../../models/life";
+import { SelfKnowledge } from "../../../../../models/selfKnowledge";
+import { LoveLanguage } from "../../../../../models/loveLanguage";
 
 export const Person = () => {
   const router = useNavigate();
@@ -231,18 +236,14 @@ export const Person = () => {
               Linguagem Amorosa
             </label>
           </div>
-          {selectTest === "MB" && !!person.mbtis.length ? (
-            <div className="grid grid-cols-5 gap-10 w-full">
-              <MbtiResultsDisplay mbtis={person.mbtis} />
-            </div>
-          ) : (
-            <div className="w-full flex flex-col justify-center items-center font-medium text-sm gap-2">
-              <IoWarningOutline size={40} />
-              <h1>
-                Este usuário na tem nenhuma devolutiva do teste Four Elements
-              </h1>
-            </div>
+          {selectTest === "MB" && <MbtiResultsDisplay mbtis={person.mbtis} />}
+          {selectTest === "LO" && (
+            <LoveLanguageResultsDisplay lls={person.lls} />
           )}
+          {selectTest === "SK" && (
+            <SelfKnowledgeResultsDisplay sks={person.sks} />
+          )}
+          {selectTest === "LI" && <LifeResultsDisplay lifes={person.lifes} />}
         </div>
       </main>
     </Layout>
@@ -252,21 +253,138 @@ export const Person = () => {
 const MbtiResultsDisplay = ({ mbtis }: { mbtis: Mbti[] }) => {
   const router = useNavigate();
 
-  return mbtis.map((mbti, i) => {
+  if (!mbtis.length)
     return (
-      <div
-        onClick={() => router(`/clinic/tests/${mbti.id}/MB`)}
-        key={i}
-        className="group ring-2 ring-[#534559] hover:ring-[#BB926B] ring-offset-2 rounded-md p-2 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out"
-      >
-        <h1 className="group-hover:text-[#BB926B] font-bold text-[#534559] text-lg duration-300 ease-in-out">
-          {MBTI_DICT[mbti.first]}
-        </h1>
-        <label className="text-sm">Porcentagem: {mbti.firstScore} %</label>
-        <p className="flex font-light text-sm items-center">
-          Sub-dominante: {MBTI_DICT[mbti.second]}
-        </p>
+      <div className="w-full flex flex-col justify-center items-center font-medium text-sm gap-2">
+        <IoWarningOutline size={40} />
+        <h1>Este usuário na tem nenhuma devolutiva do teste Four Elements</h1>
       </div>
     );
-  });
+
+  return (
+    <div className="grid grid-cols-5 gap-10 w-full">
+      {mbtis.map((mbti, i) => {
+        return (
+          <div
+            onClick={() => router(`/clinic/tests/${mbti.id}/MB`)}
+            key={i}
+            className="group ring-2 ring-[#534559] hover:ring-[#BB926B] ring-offset-2 rounded-md p-2 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out"
+          >
+            <h1 className="group-hover:text-[#BB926B] font-bold text-[#534559] text-lg duration-300 ease-in-out">
+              {MBTI_DICT[mbti.first]}
+            </h1>
+            <label className="text-sm">Porcentagem: {mbti.firstScore} %</label>
+            <p className="flex font-light text-sm items-center">
+              Sub-dominante: {MBTI_DICT[mbti.second]}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const LoveLanguageResultsDisplay = ({ lls }: { lls: LoveLanguage[] }) => {
+  const router = useNavigate();
+
+  if (!lls.length)
+    return (
+      <div className="w-full flex flex-col justify-center items-center font-medium text-sm gap-2">
+        <IoWarningOutline size={40} />
+        <h1>
+          Este usuário na tem nenhuma devolutiva do teste Linaguagem Amorosa
+        </h1>
+      </div>
+    );
+
+  return (
+    <div className="grid grid-cols-5 gap-10 w-full">
+      {lls.map((lls, i) => {
+        return (
+          <div
+            onClick={() => router(`/clinic/tests/${lls.id}/MB`)}
+            key={i}
+            className="group ring-2 ring-[#534559] hover:ring-[#BB926B] ring-offset-2 rounded-md p-2 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out"
+          >
+            <h1 className="group-hover:text-[#BB926B] font-bold text-[#534559] text-lg duration-300 ease-in-out">
+              {LO_DICT[lls.first]}
+            </h1>
+            <label className="text-sm">Porcentagem: {lls.firstScore} %</label>
+            <p className="flex font-light text-sm items-center">
+              Sub-dominante: {LO_DICT[lls.second]}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const LifeResultsDisplay = ({ lifes }: { lifes: Life[] }) => {
+  const router = useNavigate();
+
+  if (!lifes.length)
+    return (
+      <div className="w-full flex flex-col justify-center items-center font-medium text-sm gap-2">
+        <IoWarningOutline size={40} />
+        <h1>Este usuário na tem nenhuma devolutiva do teste Vida</h1>
+      </div>
+    );
+
+  return (
+    <div className="grid grid-cols-5 gap-10 w-full">
+      {lifes.map((life, i) => {
+        return (
+          <div
+            onClick={() => router(`/clinic/tests/${life.id}/MB`)}
+            key={i}
+            className="group ring-2 ring-[#534559] hover:ring-[#BB926B] ring-offset-2 rounded-md p-2 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out"
+          >
+            <h1 className="group-hover:text-[#BB926B] font-bold text-[#534559] text-lg duration-300 ease-in-out">
+              {life.total}
+            </h1>
+            <h1 className="group-hover:text-[#BB926B] font-bold text-[#534559] text-lg duration-300 ease-in-out">
+              {life.average}
+            </h1>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const SelfKnowledgeResultsDisplay = ({ sks }: { sks: SelfKnowledge[] }) => {
+  const router = useNavigate();
+
+  if (!sks.length)
+    return (
+      <div className="w-full flex flex-col justify-center items-center font-medium text-sm gap-2">
+        <IoWarningOutline size={40} />
+        <h1>
+          Este usuário na tem nenhuma devolutiva do teste Auto Conhecimento
+        </h1>
+      </div>
+    );
+
+  return (
+    <div className="grid grid-cols-5 gap-10 w-full">
+      {sks.map((sk, i) => {
+        return (
+          <div
+            onClick={() => router(`/clinic/tests/${sk.id}/MB`)}
+            key={i}
+            className="group ring-2 ring-[#534559] hover:ring-[#BB926B] ring-offset-2 rounded-md p-2 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out"
+          >
+            <h1 className="group-hover:text-[#BB926B] font-bold text-[#534559] text-lg duration-300 ease-in-out">
+              {SK_DICT[sk.first]}
+            </h1>
+            <label className="text-sm">Porcentagem: {sk.firstScore} %</label>
+            <p className="flex font-light text-sm items-center">
+              Sub-dominante: {SK_DICT[sk.second]}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  );
 };

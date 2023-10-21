@@ -1,9 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { ClinicContext } from "../../../context/ClinicContext";
-import { ResponseMbtiOne } from "../types/tests.type";
-import { getMbti } from "../api/getTest";
+import {
+  ResponseLifeOne,
+  ResponseLoveLanguageOne,
+  ResponseMbtiOne,
+  ResponseSelfKnowledgeOne,
+} from "../types/tests.type";
+import {
+  getLife,
+  getLoveLanguage,
+  getMbti,
+  getSelfKnowledge,
+} from "../api/getTest";
 
-export const useMbti = (test_id: string, test: string) => {
+export const useTest = (
+  test_id: string,
+  test: string
+): {
+  result:
+    | ResponseMbtiOne
+    | ResponseLifeOne
+    | ResponseSelfKnowledgeOne
+    | ResponseLoveLanguageOne;
+} => {
   const { getCurrentClinic } = useContext(ClinicContext);
 
   const [mbti, setMbti] = useState<ResponseMbtiOne>({
@@ -56,14 +75,196 @@ export const useMbti = (test_id: string, test: string) => {
       expires_at: "",
     },
   });
+  const [life, setLife] = useState<ResponseLifeOne>({
+    id: 0,
+    average: 0,
+    total: 0,
+    person: {
+      id: 0,
+      cpf: "",
+      age: 0,
+      sex: "F",
+      address: {
+        id: 0,
+        cep: "",
+        number: "",
+        street: "",
+        neighboorhood: "",
+        city: "",
+        state: "AC",
+      },
+      cellphone: {
+        id: 0,
+        ddd: "",
+        telefone: "",
+        type: "FX",
+      },
+      user: {
+        id: 0,
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        type: "P",
+      },
+    },
+    result: {
+      id: 0,
+      expired: "EX",
+      testTaken: "US",
+      test: "MB",
+      key: "",
+      seen: "VI",
+      created_at: "",
+      expires_at: "",
+    },
+  });
+  const [selfKnowledge, setSelfKnowledge] = useState<ResponseSelfKnowledgeOne>({
+    id: 0,
+    first: "AU",
+    fourth: "DI",
+    second: "KI",
+    third: "VI",
+    firstScore: 0,
+    secondScore: 0,
+    thirdScore: 0,
+    fourthScore: 0,
+    person: {
+      id: 0,
+      cpf: "",
+      age: 0,
+      sex: "F",
+      address: {
+        id: 0,
+        cep: "",
+        number: "",
+        street: "",
+        neighboorhood: "",
+        city: "",
+        state: "AC",
+      },
+      cellphone: {
+        id: 0,
+        ddd: "",
+        telefone: "",
+        type: "FX",
+      },
+      user: {
+        id: 0,
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        type: "P",
+      },
+    },
+    result: {
+      id: 0,
+      expired: "EX",
+      testTaken: "US",
+      test: "MB",
+      key: "",
+      seen: "VI",
+      created_at: "",
+      expires_at: "",
+    },
+  });
+  const [loveLanguage, setLoveLanguage] = useState<ResponseLoveLanguageOne>({
+    id: 0,
+    first: "AF",
+    second: "PE",
+    third: "SE",
+    fourth: "TI",
+    fifth: "TO",
+    firstScore: 0,
+    secondScore: 0,
+    thirdScore: 0,
+    fourthScore: 0,
+    fifthScore: 0,
+    person: {
+      id: 0,
+      cpf: "",
+      age: 0,
+      sex: "F",
+      address: {
+        id: 0,
+        cep: "",
+        number: "",
+        street: "",
+        neighboorhood: "",
+        city: "",
+        state: "AC",
+      },
+      cellphone: {
+        id: 0,
+        ddd: "",
+        telefone: "",
+        type: "FX",
+      },
+      user: {
+        id: 0,
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        type: "P",
+      },
+    },
+    result: {
+      id: 0,
+      expired: "EX",
+      testTaken: "US",
+      test: "MB",
+      key: "",
+      seen: "VI",
+      created_at: "",
+      expires_at: "",
+    },
+  });
 
-  const fetchMbti = () => {
-    getMbti({ id: getCurrentClinic().id, test_id, test }).then((response) => {
-      setMbti(response);
-    });
+  const fetchTest = () => {
+    switch (test) {
+      case "MB":
+        getMbti({ id: getCurrentClinic().id, test_id, test }).then(
+          (response) => {
+            setMbti(response);
+          }
+        );
+        break;
+      case "LI":
+        getLife({ id: getCurrentClinic().id, test_id, test }).then(
+          (response) => {
+            setLife(response);
+          }
+        );
+        break;
+      case "SK":
+        getSelfKnowledge({ id: getCurrentClinic().id, test_id, test }).then(
+          (response) => {
+            setSelfKnowledge(response);
+          }
+        );
+        break;
+      case "LO":
+        getLoveLanguage({ id: getCurrentClinic().id, test_id, test }).then(
+          (response) => {
+            setLoveLanguage(response);
+          }
+        );
+        break;
+    }
   };
 
-  useEffect(fetchMbti, []);
+  useEffect(fetchTest, [getCurrentClinic, test, test_id]);
 
-  return { mbti };
+  return {
+    result:
+      test === "MB"
+        ? mbti
+        : test === "SK"
+        ? selfKnowledge
+        : test === "LO"
+        ? loveLanguage
+        : life,
+  };
 };

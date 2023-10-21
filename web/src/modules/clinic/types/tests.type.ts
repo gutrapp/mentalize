@@ -1,8 +1,11 @@
 import { Address } from "../../../models/address";
 import { Cellphone } from "../../../models/cellphone";
 import { Key } from "../../../models/key";
+import { Life } from "../../../models/life";
+import { LoveLanguage } from "../../../models/loveLanguage";
 import { Mbti } from "../../../models/mbti";
 import { Person } from "../../../models/person";
+import { SelfKnowledge } from "../../../models/selfKnowledge";
 import { User } from "../../../models/user";
 
 export type GetTest = {
@@ -30,6 +33,33 @@ export type ResponseMbti = Mbti & {
 };
 
 export type ResponseMbtiOne = Mbti & {
+  result: Key;
+  person: Person & {
+    user: User;
+    cellphone: Cellphone;
+    address: Address;
+  };
+};
+
+export type ResponseLifeOne = Life & {
+  result: Key;
+  person: Person & {
+    user: User;
+    cellphone: Cellphone;
+    address: Address;
+  };
+};
+
+export type ResponseLoveLanguageOne = LoveLanguage & {
+  result: Key;
+  person: Person & {
+    user: User;
+    cellphone: Cellphone;
+    address: Address;
+  };
+};
+
+export type ResponseSelfKnowledgeOne = SelfKnowledge & {
   result: Key;
   person: Person & {
     user: User;

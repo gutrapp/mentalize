@@ -66,3 +66,18 @@ export const MBTI_DICT = {
   FI: "Fogo",
   WA: "Água",
 };
+
+export const SK_DICT = {
+  VI: "Visual",
+  AU: "Cinestésico",
+  DI: "Auditório",
+  KI: "Digital",
+};
+
+export const LO_DICT = {
+  AF: "Afirmação",
+  SE: "Serviço",
+  PE: "Presentes",
+  TI: "Tempo",
+  TO: "Toque",
+};
