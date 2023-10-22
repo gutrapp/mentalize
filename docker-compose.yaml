@@ -23,15 +23,6 @@ services:
     ports:
       - 8080:80
 
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    ports:
-      - 80:80
-    depends_on:
-      - web
-
 networks:
   default:
     name: mentallize
