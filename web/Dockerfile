@@ -12,7 +12,7 @@ RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
 
-COPY --from=build-stage /app/dist /var/www/app.mentallize.com/html
+COPY --from=build-stage /app/dist /app/dist
 
 COPY ../nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
