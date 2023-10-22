@@ -57,8 +57,7 @@ export const useTest = (
       },
       user: {
         id: 0,
-        first_name: "",
-        last_name: "",
+        full_name: "",
         email: "",
         password: "",
         type: "P",
@@ -101,8 +100,7 @@ export const useTest = (
       },
       user: {
         id: 0,
-        first_name: "",
-        last_name: "",
+        full_name: "",
         email: "",
         password: "",
         type: "P",
@@ -118,6 +116,17 @@ export const useTest = (
       created_at: "",
       expires_at: "",
     },
+    espiritual: 0,
+    mente: 0,
+    saúde: 0,
+    prosperidade: 0,
+    carreira: 0,
+    amor: 0,
+    diversão: 0,
+    dinheiro: 0,
+    disciplina: 0,
+    felicidade: 0,
+    propósito: 0,
   });
   const [selfKnowledge, setSelfKnowledge] = useState<ResponseSelfKnowledgeOne>({
     id: 0,
@@ -151,8 +160,7 @@ export const useTest = (
       },
       user: {
         id: 0,
-        first_name: "",
-        last_name: "",
+        full_name: "",
         email: "",
         password: "",
         type: "P",
@@ -203,8 +211,7 @@ export const useTest = (
       },
       user: {
         id: 0,
-        first_name: "",
-        last_name: "",
+        full_name: "",
         email: "",
         password: "",
         type: "P",

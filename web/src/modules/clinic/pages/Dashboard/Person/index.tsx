@@ -41,7 +41,7 @@ export const Person = () => {
       <main className="w-full flex flex-col m-5 mt-[80px] gap-5 text-base font-medium mb-10">
         <div className="text-[#414042] bg-white rounded-md border w-full p-5">
           <h1 className="text-[#BB926B] text-4xl mb-12 font-bold">
-            {person.user.first_name} {person.user.last_name}
+            {person.user.full_name}
           </h1>
           <div className="grid grid-cols-3 gap-10">
             <div className="flex flex-col">
@@ -51,13 +51,9 @@ export const Person = () => {
               <div className="flex flex-col gap-1">
                 <label
                   className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-y"
-                  onClick={() =>
-                    handleCopyText(
-                      `${person.user.first_name} ${person.user.last_name}`
-                    )
-                  }
+                  onClick={() => handleCopyText(person.user.full_name)}
                 >
-                  Nome: {person.user.first_name} {person.user.last_name}
+                  Nome: {person.user.full_name}
                 </label>
                 <label
                   className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"

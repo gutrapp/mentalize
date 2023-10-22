@@ -27,8 +27,7 @@ export const Register = () => {
   const router = useNavigate();
 
   const [user, setUser] = useState<Omit<User, "id">>({
-    first_name: "",
-    last_name: "",
+    full_name: "",
     email: "",
     password: "",
     type: "P",
@@ -125,24 +124,12 @@ export const Register = () => {
                 {error.msg}
               </h1>
             )}
-            <div className="flex flex-row gap-[1.2rem]">
-              <Input
-                title="Nome:"
-                type="text"
-                value={user.first_name}
-                onChange={(e) =>
-                  setUser({ ...user, first_name: e.target.value })
-                }
-              />
-              <Input
-                title="Sobrenome:"
-                type="text"
-                value={user.last_name}
-                onChange={(e) =>
-                  setUser({ ...user, last_name: e.target.value })
-                }
-              />
-            </div>
+            <Input
+              title="Nome:"
+              type="text"
+              value={user.full_name}
+              onChange={(e) => setUser({ ...user, full_name: e.target.value })}
+            />
             <Input
               title="CPF:"
               type="text"

@@ -48,8 +48,7 @@ export const useKey = (key_id: string) => {
       },
       user: {
         id: 0,
-        first_name: "",
-        last_name: "",
+        full_name: "",
         email: "",
         password: "",
         type: "P",

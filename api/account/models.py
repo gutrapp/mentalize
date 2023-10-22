@@ -10,8 +10,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     ADMIN = "A"
     ROLE_CHOICES = [(PERSON, "Pessoa"), (ADMIN, "Administrador")]
 
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    full_name = models.CharField(max_length=150)
     email = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=255)
     type = models.CharField(max_length=1, choices=ROLE_CHOICES)

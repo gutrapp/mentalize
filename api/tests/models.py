@@ -52,6 +52,17 @@ class Life(models.Model):
     total = models.IntegerField()
     result = models.OneToOneField(Result, on_delete=models.CASCADE)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
+    espiritual = models.IntegerField()
+    mente = models.IntegerField()
+    saúde = models.IntegerField()
+    prosperidade = models.IntegerField()
+    carreira = models.IntegerField()
+    amor = models.IntegerField()
+    diversão = models.IntegerField()
+    dinheiro = models.IntegerField()
+    disciplina = models.IntegerField()
+    felicidade = models.IntegerField()
+    propósito = models.IntegerField()
 
 
 class SelfKnowledge(models.Model):

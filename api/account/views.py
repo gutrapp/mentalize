@@ -6,8 +6,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework import status, permissions
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 
 from account.models import User
 from account.serializers import UserSerializer
@@ -15,6 +17,8 @@ from clinic.serializers import AddressSerializer, CellphoneSerializer
 from .models import Person, User
 from .filters import PersonFilter, UserFilter
 from .serializers import PersonSerializer, AdminSerializer, UserSerializer
+from tests.serializers import ResultSerializer
+from tests.models import Result
 
 
 class PersonViews(viewsets.ModelViewSet):
@@ -24,6 +28,16 @@ class PersonViews(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = "__all__"
     ordering = ["id"]
+
+    @action(detail=False)
+    def get_current_user_results(self, request: Request, *args, **kwargs) -> Response:
+        try:
+            user = request.user
+            results = user.person.result_set.filter(testTaken=Result.NAO_USADO)
+            serializer = ResultSerializer(results, many=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class UserViews(viewsets.ModelViewSet):

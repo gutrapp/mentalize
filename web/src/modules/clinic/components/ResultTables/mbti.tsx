@@ -27,8 +27,7 @@ export const MbtiTable = () => {
     second: "",
     firstScore: "",
     secondScore: "",
-    first_name: "",
-    last_name: "",
+    full_name: "",
     email: "",
     key: "",
     limit: "25",
@@ -63,12 +62,11 @@ export const MbtiTable = () => {
           <DataTableHeadFilters>
             <td className="border-r px-2 pb-1">
               <DataTableInput
-                value={params.first_name}
+                value={params.full_name}
                 onChange={(e) =>
                   setParams({
                     ...params,
-                    first_name: e.target.value,
-                    last_name: e.target.value,
+                    full_name: e.target.value,
                   })
                 }
               />
@@ -154,7 +152,7 @@ export const MbtiTable = () => {
                 className="text-center border"
                 onClick={() => handleTestRedirect(test)}
               >
-                {test.user.first_name} {test.user.last_name}
+                {test.user.full_name}
               </td>
               <td
                 className="text-center border"

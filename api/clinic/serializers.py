@@ -17,7 +17,7 @@ class CellphoneSerializer(serializers.ModelSerializer):
 
 class ClinicSerializer(serializers.ModelSerializer):
     address = AddressSerializer(allow_null=True)
-    cellphone = CellphoneSerializer(allow_null=True, many=True)
+    cellphone = CellphoneSerializer(allow_null=True)
 
     class Meta:
         model = Clinic

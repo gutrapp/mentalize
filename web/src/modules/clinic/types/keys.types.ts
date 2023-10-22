@@ -12,8 +12,7 @@ import { Cellphone } from "../../../models/cellphone";
 export type Params = {
   offset: string;
   limit: string;
-  person__user__first_name: string;
-  person__user__last_name: string;
+  person__user__full_name: string;
   expired: "EX" | "" | "VA";
   testTaken: "US" | "" | "NU";
   key: string;

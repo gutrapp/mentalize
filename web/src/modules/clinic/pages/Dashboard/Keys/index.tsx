@@ -53,8 +53,7 @@ export const Keys = () => {
     seen: "",
     created_at: "",
     expires_at: "",
-    person__user__first_name: "",
-    person__user__last_name: "",
+    person__user__full_name: "",
     test: "",
   });
 
@@ -216,12 +215,11 @@ export const Keys = () => {
               </td>
               <td className="border-r px-2 pb-1">
                 <DataTableInput
-                  value={params.person__user__first_name}
+                  value={params.person__user__full_name}
                   onChange={(e) =>
                     setParams({
                       ...params,
-                      person__user__first_name: e.target.value,
-                      person__user__last_name: e.target.value,
+                      person__user__full_name: e.target.value,
                     })
                   }
                 />
@@ -302,7 +300,7 @@ export const Keys = () => {
                   className="text-center border"
                   onClick={() => handleKeyRedirect(key)}
                 >
-                  {key.person.user.first_name} {key.person.user.last_name}
+                  {key.person.user.full_name}
                 </td>
                 <td
                   className="text-center border"

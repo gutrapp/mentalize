@@ -147,20 +147,18 @@ class ClinicViews(viewsets.ModelViewSet):
             limit = int(filters.pop("limit"))
             offset = int(filters.pop("offset"))
 
-            cellphone_filters, user_filters, person_filters = {}, {}, {}
+            cellphone_filters, person_filters = {}, {}
 
             if filters.get("telefone") != None:
                 cellphone_filters.update(
                     {"telefone__icontains": filters.get("telefone")}
                 )
-            if filters.get("first_name") != None:
-                user_filters.update(
-                    {"first_name__icontains": filters.get("first_name")}
+            if filters.get("full_name") != None:
+                person_filters.update(
+                    {"user__full_name__icontains": filters.get("full_name")}
                 )
-            if filters.get("last_name") != None:
-                user_filters.update({"last_name__icontains": filters.get("last_name")})
             if filters.get("email") != None:
-                user_filters.update({"email__icontains": filters.get("email")})
+                person_filters.update({"user__email__icontains": filters.get("email")})
             if filters.get("cpf") != None:
                 person_filters.update({"cpf__icontains": filters.get("cpf")})
             if filters.get("age") != None:
@@ -171,14 +169,12 @@ class ClinicViews(viewsets.ModelViewSet):
             results_exists = Result.objects.filter(
                 person_id=OuterRef("id"), clinic_id=pk
             )
-            user_exists = User.objects.filter(Q(type=User.PERSON) & Q(**user_filters))
             cellphone_exists = Cellphone.objects.filter(
                 Q(id=OuterRef("cellphone_id")) & Q(**cellphone_filters)
             )
 
             people = Person.objects.filter(
                 Q(Exists(results_exists))
-                & Q(Exists(user_exists))
                 & Q(Exists(cellphone_exists))
                 & Q(**person_filters)
             )[offset : offset + limit]
@@ -205,13 +201,9 @@ class ClinicViews(viewsets.ModelViewSet):
             data = []
 
             user_filters, results_filter = {}, {}
-            if filters.get("first_name") != None:
+            if filters.get("full_name") != None:
                 user_filters.update(
-                    {"user__first_name__icontains": filters.get("first_name")}
-                )
-            if filters.get("last_name") != None:
-                user_filters.update(
-                    {"user__last_name__icontains": filters.get("last_name")}
+                    {"user__full_name__icontains": filters.get("full_name")}
                 )
             if filters.get("email") != None:
                 user_filters.update({"user__email__icontains": filters.get("email")})
@@ -258,20 +250,115 @@ class ClinicViews(viewsets.ModelViewSet):
                             }
                         )
                 case Result.SELF_KNOWLEDGE:
-                    sks = SelfKnowledge.objects.filter(Q(clinic_id=pk), **mbti_filters)[
-                        offset : offset + limit
-                    ]
-                    serializer = SelfKnowledgeSerializer(sks, many=True)
+                    sks_filters = {}
+                    if filters.get("first") != None:
+                        sks_filters.update({"first": filters.get("first")})
+                    if filters.get("second") != None:
+                        sks_filters.update({"second": filters.get("second")})
+                    if filters.get("firstScore") != None:
+                        sks_filters.update({"firstScore": filters.get("firstScore")})
+                    if filters.get("secondScore") != None:
+                        sks_filters.update({"secondScore": filters.get("secondScore")})
+
+                    person_subquery = Person.objects.filter(
+                        Q(id=OuterRef("person_id")), Q(**user_filters)
+                    ).values("id")
+
+                    results_subquery = Result.objects.filter(
+                        Q(clinic_id=pk),
+                        Q(id=OuterRef("result_id")),
+                        Q(Exists(person_subquery)),
+                        Q(
+                            **results_filter,
+                        ),
+                    ).values("id")
+
+                    sks = SelfKnowledge.objects.filter(
+                        Q(clinic_id=pk),
+                        Q(Exists(results_subquery)),
+                        **sks_filters,
+                    )[offset : offset + limit]
+
+                    for sk in sks:
+                        data.append(
+                            {
+                                **SelfKnowledgeSerializer(sk).data,
+                                "result": ResultSerializer(sk.result).data,
+                                "user": UserSerializer(sk.result.person.user).data,
+                            }
+                        )
                 case Result.LIFE:
-                    lifes = Life.objects.filter(Q(clinic_id=pk), **filters)[
-                        offset : offset + limit
-                    ]
-                    serializer = LifeSerializer(mbtis, many=True)
+                    life_filters = {}
+                    if filters.get("average") != None:
+                        life_filters.update({"average": filters.get("average")})
+                    if filters.get("total") != None:
+                        life_filters.update({"total": filters.get("total")})
+
+                    person_subquery = Person.objects.filter(
+                        Q(id=OuterRef("person_id")), Q(**user_filters)
+                    ).values("id")
+
+                    results_subquery = Result.objects.filter(
+                        Q(clinic_id=pk),
+                        Q(id=OuterRef("result_id")),
+                        Q(Exists(person_subquery)),
+                        Q(
+                            **results_filter,
+                        ),
+                    ).values("id")
+
+                    lifes = Mbti.objects.filter(
+                        Q(clinic_id=pk),
+                        Q(Exists(results_subquery)),
+                        **life_filters,
+                    )[offset : offset + limit]
+
+                    for life in lifes:
+                        data.append(
+                            {
+                                **LifeSerializer(life).data,
+                                "result": ResultSerializer(life.result).data,
+                                "user": UserSerializer(life.result.person.user).data,
+                            }
+                        )
                 case Result.LOVE_LANGUAGE:
-                    lls = LoveLanguage.objects.filter(Q(clinic_id=pk), **filters)[
-                        offset : offset + limit
-                    ]
-                    serializer = LoveLanguageSerializer(lls, many=True)
+                    lls_filters = {}
+                    if filters.get("first") != None:
+                        lls_filters.update({"first": filters.get("first")})
+                    if filters.get("second") != None:
+                        lls_filters.update({"second": filters.get("second")})
+                    if filters.get("firstScore") != None:
+                        lls_filters.update({"firstScore": filters.get("firstScore")})
+                    if filters.get("secondScore") != None:
+                        lls_filters.update({"secondScore": filters.get("secondScore")})
+
+                    person_subquery = Person.objects.filter(
+                        Q(id=OuterRef("person_id")), Q(**user_filters)
+                    ).values("id")
+
+                    results_subquery = Result.objects.filter(
+                        Q(clinic_id=pk),
+                        Q(id=OuterRef("result_id")),
+                        Q(Exists(person_subquery)),
+                        Q(
+                            **results_filter,
+                        ),
+                    ).values("id")
+
+                    lls = Mbti.objects.filter(
+                        Q(clinic_id=pk),
+                        Q(Exists(results_subquery)),
+                        **lls_filters,
+                    )[offset : offset + limit]
+
+                    for ll in lls:
+                        data.append(
+                            {
+                                **LoveLanguage(ll).data,
+                                "result": ResultSerializer(ll.result).data,
+                                "user": UserSerializer(ll.result.person.user).data,
+                            }
+                        )
             return Response(
                 data=data,
                 status=status.HTTP_200_OK,

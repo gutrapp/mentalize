@@ -15,7 +15,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (pathname !== "/") setFixed(true);
-  }, []);
+  }, [pathname]);
 
   window.addEventListener("scroll", handleTrigger);
 
@@ -25,19 +25,25 @@ export const Header = () => {
         trigger
           ? "font-headers bg-[#1e2123] text-lg font-bold w-full hidden lg:flex lg:fixed text-white opacity-75 shadow-2xl duration-500"
           : fixed
-          ? "font-headers bg-[#1e2123] text-lg font-bold w-full hidden lg:flex lg:fixed text-white opacity-75 shadow-2xl duration-500"
+          ? "h-[55px] z-20 w-full bg-[#534559] font-bold fixed text-[#BB926B] flex items-center justify-center text-4xl"
           : "font-headers bg-gradient-to-b from-[#1e2123] to-transparent  text-lg w-full hidden lg:flex lg:fixed font-bold text-white duration-500"
       }
     >
-      <div className="mx-[100px] flex w-full h-[85px] items-center justify-between uppercase tracking-[2px]">
+      <div className="mx-[300px] flex w-full h-[85px] items-center justify-between">
         <div>
-          <Link to={"/"}>
-            <h1 className="flex text-4xl">
-              JEAN <h1 className="text-[#bfa15e]">CARLO</h1> CARDOZO
-            </h1>
-          </Link>
+          {fixed ? (
+            <Link to={"/"}>
+              <h1 className="flex text-4xl text-[#BB926B]">Mentallize</h1>
+            </Link>
+          ) : (
+            <Link to={"/"}>
+              <h1 className="flex text-4xl text-white/90 tracking-[2px]">
+                JEAN <h1 className="text-[#BB926B]">CARLO</h1> CARDOZO
+              </h1>
+            </Link>
+          )}
         </div>
-        <div>
+        <div className="text-lg text-white/90">
           <NavItem href="#service" content="Serviços" />
           <Link to={"/tests"}>
             <NavItem content="Testes" />

@@ -104,7 +104,7 @@ export const Key = () => {
             onClick={() => router(`/clinic/people/${key.person.id}`)}
           >
             <h1 className="text-[#BB926B] text-4xl font-bold flex items-center gap-2 hover:cursor-pointer hover:border-[#BB926B] border-white border-b-2 w-fit ease-in-out duration-300">
-              {key.person.user.first_name} {key.person.user.last_name}
+              {key.person.user.full_name}
               <HiOutlineMagnifyingGlass size={35} />
             </h1>
             <p className="font-light text-sm flex items-center gap-1">
@@ -119,13 +119,9 @@ export const Key = () => {
               <div className="flex flex-col gap-1">
                 <label
                   className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-y"
-                  onClick={() =>
-                    handleCopyText(
-                      `${key.person.user.first_name} ${key.person.user.last_name}`
-                    )
-                  }
+                  onClick={() => handleCopyText(`${key.person.user.full_name}`)}
                 >
-                  Nome: {key.person.user.first_name} {key.person.user.last_name}
+                  Nome: {key.person.user.full_name}
                 </label>
                 <label
                   className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"
@@ -235,7 +231,22 @@ export const Key = () => {
           <div className="text-[#414042] bg-white rounded-md border w-full p-5 mb-7">
             <div
               className="mb-12"
-              onClick={() => router(`/clinic/tests/${key.person.id}`)}
+              onClick={() => {
+                switch (key.test) {
+                  case "MB":
+                    router(`/clinic/tests/${key.mbti.id}/${key.test}`);
+                    break;
+                  case "LI":
+                    router(`/clinic/tests/${key.life.id}/${key.test}`);
+                    break;
+                  case "LO":
+                    router(`/clinic/tests/${key.lovelanguage.id}/${key.test}`);
+                    break;
+                  case "SK":
+                    router(`/clinic/tests/${key.selfknowledge.id}/${key.test}`);
+                    break;
+                }
+              }}
             >
               <h1 className="text-[#BB926B] text-4xl font-bold flex items-center gap-2 hover:cursor-pointer hover:border-[#BB926B] border-white border-b-2 w-fit ease-in-out duration-300">
                 {TEST_DICT[key.test]}

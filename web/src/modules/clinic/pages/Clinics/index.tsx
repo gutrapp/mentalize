@@ -23,7 +23,7 @@ export const Clinics = () => {
           <h1 className="text-[#BB926B] font-bold">SUAS CLÍNICAS</h1>
         </div>
 
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-10">
           {clinics.map((clinic, index) => {
             return (
               <div

@@ -39,7 +39,7 @@ export const Test = () => {
             onClick={() => router(`/clinic/people/${result.person.id}`)}
           >
             <h1 className="text-[#BB926B] text-4xl font-bold flex items-center gap-2 hover:cursor-pointer hover:border-[#BB926B] border-white border-b-2 w-fit ease-in-out duration-300">
-              {result.person.user.first_name} {result.person.user.last_name}
+              {result.person.user.full_name}
               <HiOutlineMagnifyingGlass size={35} />
             </h1>
             <p className="font-light text-sm flex items-center gap-1">
@@ -54,14 +54,9 @@ export const Test = () => {
               <div className="flex flex-col gap-1">
                 <label
                   className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-y"
-                  onClick={() =>
-                    handleCopyText(
-                      `${result.person.user.first_name} ${result.person.user.last_name}`
-                    )
-                  }
+                  onClick={() => handleCopyText(result.person.user.full_name)}
                 >
-                  Nome: {result.person.user.first_name}{" "}
-                  {result.person.user.last_name}
+                  Nome: {result.person.user.full_name}
                 </label>
                 <label
                   className="hover:cursor-pointer hover:bg-[#e1e1e1] rounded-md px-2 py-1 border-b"

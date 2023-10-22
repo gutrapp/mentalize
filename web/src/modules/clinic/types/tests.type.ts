@@ -19,8 +19,7 @@ export type Params = {
   second: "AR" | "EA" | "" | "FI" | "WA";
   firstScore: string;
   secondScore: string;
-  first_name: string;
-  last_name: string;
+  full_name: string;
   email: string;
   key: string;
   limit: string;

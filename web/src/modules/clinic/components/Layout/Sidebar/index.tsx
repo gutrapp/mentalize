@@ -55,7 +55,7 @@ export const Sidebar = ({ children }: SidebarProps) => {
             }}
             className="hover:text-[#534559] hover:bg-[#e1e1e1] duration-300 py-1 px-4 rounded-r-md w-full flex justify-between items-center gap-x-2"
           >
-            Sair
+            Trocar de Clínica
             <MdExitToApp />
           </button>
         </div>

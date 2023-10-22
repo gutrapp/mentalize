@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Params } from "../../../types/person.types";
 import { usePeople } from "../../../hooks/usePeople";
 import { Redirect } from "../../../types/keys.types";
-import { LuFilter } from "react-icons/lu";
 import { Button } from "../../../../../components/Button/Button";
 import { DataTable } from "../../../../../components/DataTable";
 import { DataTableHead } from "../../../../../components/DataTable/DataTableHead";
@@ -30,8 +29,7 @@ export const People = () => {
     cpf: "",
     age: "",
     sex: "",
-    first_name: "",
-    last_name: "",
+    full_name: "",
     email: "",
     telefone: "",
   });
@@ -65,12 +63,11 @@ export const People = () => {
             <DataTableHeadFilters>
               <td className="border-r px-2 pb-1">
                 <DataTableInput
-                  value={params.first_name}
+                  value={params.full_name}
                   onChange={(e) =>
                     setParams({
                       ...params,
-                      first_name: e.target.value,
-                      last_name: e.target.value,
+                      full_name: e.target.value,
                     })
                   }
                 />
@@ -143,7 +140,7 @@ export const People = () => {
                   className="text-center border"
                   onClick={() => handlePersonRedirect(person)}
                 >
-                  {person.user.first_name} {person.user.last_name}
+                  {person.user.full_name}
                 </td>
                 <td
                   className="text-center border"
