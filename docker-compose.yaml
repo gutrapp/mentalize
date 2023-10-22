@@ -9,19 +9,21 @@ services:
       - ./api:/app
     environment:
       - DEBUG=False
-      - DJANGO_SECRET="g8j0)^%t7!v4_yq1sk8$8r=rlbqbc0zi$=2mr&t9)v)5%i+xoh"
-      - DB_NAME="mentalize"
-      - DB_USER="postgres"
-      - DB_PASSWORD="99831745gusta"
-      - DB_HOST="localhost"
-      - DB_PORT="5432"
+      - DJANGO_SECRET='g8j0)^%t7!v4_yq1sk8$8r=rlbqbc0zi$=2mr&t9)v)5%i+xoh'
+      - DB_NAME=mentalize
+      - DB_USER=postgres
+      - DB_PASSWORD=99831745gusta
+      - DB_HOST=localhost
+      - DB_PORT=5432
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
 
   web:
     build:
       context: ./web
     ports:
-      - 8080:8080
+      - 8080:80
+    depends_on:
+      - api
 
 networks:
   default:
