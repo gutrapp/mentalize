@@ -16,7 +16,7 @@ services:
       - DB_PASSWORD="99831745gusta"
       - DB_HOST="localhost"
       - DB_PORT="5432"
-    command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
 
   # Vite with Nginx
   vite-nginx:
