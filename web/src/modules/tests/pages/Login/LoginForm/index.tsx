@@ -29,6 +29,7 @@ export const LoginForm = () => {
       .then(() =>
         api.post("auth/login", data).then((response) => {
           if (response.status === 200) setCurrentPerson(response.data);
+          else setError("Não foi possivel fazer login");
         })
       )
       .then(() => router("/tests"));

@@ -27,9 +27,15 @@ export const AdminLogin = () => {
 
     try {
       return api.get("auth/csrf").then((response) => {
-        if (response.status !== 200) throw new Error(response.statusText);
+        if (response.status !== 200) {
+          throw Error(response.statusText);
+          setError("Não foi possível fazer login");
+        }
         api.post("auth/login", data).then((response) => {
-          if (response.status !== 200) throw new Error(response.statusText);
+          if (response.status !== 200) {
+            throw Error(response.statusText);
+            setError("Não foi possível fazer login");
+          }
           const { id, group, role } = response.data;
           setCurrentAdmin({ id, group, role });
           router("/clinic");
