@@ -1,7 +1,7 @@
 version: "3"
 services:
   # Django API
-  django:
+  api:
     build:
       context: ./api
     ports:
@@ -19,17 +19,16 @@ services:
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
 
   # Vite with Nginx
-  vite-nginx:
+  web:
     build:
       context: ./web
     ports:
       - "80:80"
     volumes:
       - ./web:/app/dist
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/
     depends_on:
-      - django
-    command: npm run vite
+      - api
+
 networks:
   default:
     name: mentallize
