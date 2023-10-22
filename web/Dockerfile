@@ -1,28 +1,22 @@
-# Use an official Node.js runtime as the base image
-FROM node:14 AS builder
+FROM node as builder
+
+RUN mkdir -p /app
+RUN chmod -R 777 /app
 
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+ENV PATH /app/node_modules/.bin:$PATH
 
-# Install app dependencies
+COPY package.json .
 RUN npm install
 
-# Copy the rest of the application code
 COPY . .
+CMD ["npm","run","build"]
 
-# Build the React app
-RUN npm run build
 
-# Use Nginx as the final image
-FROM nginx:alpine
-
-# Copy the built app from the previous stage
-COPY --from=builder /app/build /usr/share/nginx/html
-
-# Expose port 80
+FROM nginx:stable-alpine
+COPY --from=builder /app/build /usr/share/nginx/html 
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-
-# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
