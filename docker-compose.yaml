@@ -19,7 +19,7 @@ services:
 
   web:
     build:
-    context: ./web
+      context: ./web
     ports:
       - 8080:80
 
