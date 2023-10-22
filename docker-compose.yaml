@@ -1,0 +1,35 @@
+version: "3"
+services:
+  # Django API
+  django:
+    build:
+      context: ./api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app
+    environment:
+      - DEBUG=False
+      - DJANGO_SECRET="g8j0)^%t7!v4_yq1sk8$8r=rlbqbc0zi$=2mr&t9)v)5%i+xoh"
+      - DB_NAME="mentalize"
+      - DB_USER="postgres"
+      - DB_PASSWORD="99831745gusta"
+      - DB_HOST="localhost"
+      - DB_PORT="5432"
+    command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
+
+  # Vite with Nginx
+  vite-nginx:
+    build:
+      context: ./web
+    ports:
+      - "80:80"
+    volumes:
+      - ./web:/app/dist
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/
+    depends_on:
+      - django
+
+networks:
+  default:
+    name: mentallize
