@@ -9,10 +9,9 @@ RUN npm run build
 
 FROM nginx:alpine
 
-RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder-react /app/dist /usr/share/nginx/html
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
