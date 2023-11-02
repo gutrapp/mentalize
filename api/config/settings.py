@@ -6,8 +6,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET")
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
 DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = ["app.mentallize.com"]
@@ -19,7 +17,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "whitenoise",
+    "whitenoise.runserver_nostatic",
     "corsheaders",
     "django_filters",
     "rest_framework",
@@ -109,5 +107,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIR = [os.path.join(BASE_DIR, "static")]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
