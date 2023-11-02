@@ -14,7 +14,7 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder-react /app/dist /usr/share/nginx/html
 
 RUN rm -rf /etc/nginx/conf.d/*
-COPY ../nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
