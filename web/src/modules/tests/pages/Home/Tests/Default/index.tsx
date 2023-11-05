@@ -1,4 +1,4 @@
-import { TbCompass, TbDirections } from "react-icons/tb";
+import { TbDirections } from "react-icons/tb";
 import { TestCard } from "../TestCard/Default";
 import { BiBrain } from "react-icons/bi";
 import { GiLovers, GiUnbalanced } from "react-icons/gi";

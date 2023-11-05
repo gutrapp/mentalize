@@ -10,7 +10,6 @@ import { DataTableHeadFilters } from "../../../../components/DataTable/DataTable
 import { DataTableHeadLabels } from "../../../../components/DataTable/DataTableHead/DataTableHeadLabels";
 import { DataTableInput } from "../../../../components/DataTable/Input";
 import { PAGINATION_CHOICES } from "../../../../helpers/choices.helper";
-import { MBTI_DICT } from "../../../../helpers/dict.helper";
 import { useLife } from "../../hooks/useTests";
 import { Redirect } from "../../types/keys.types";
 import { ParamsLife } from "../../types/tests.type";

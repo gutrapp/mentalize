@@ -36,6 +36,7 @@ export const AdminLogin = () => {
         });
       });
     } catch (error) {
+      setError("Erro ao fazer login");
       return Promise.reject();
     }
   };
