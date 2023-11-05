@@ -1,8 +1,11 @@
 export const IMAGES = {
-  gold: "http://localhost:8000/static/assets/images/gold.jpg",
-  bgMobile: "http://localhost:8000/static/assets/images/mobile.jpeg",
-  bg: "http://localhost:8000/static/assets/images/11.jpeg",
-  frase: "http://localhost:8000/static/assets/images/13.png",
-  fraseMobile: "http://localhost:8000/static/assets/images/14.png",
-  loginBanner: "http://localhost:8000/static/assets/images/4.jpeg",
+  gold: "http://app.mentallize.com:8000/staticfiles/assets/images/gold.jpg",
+  bgMobile:
+    "http://app.mentallize.com:8000/staticfiles/assets/images/mobile.jpeg",
+  bg: "http://app.mentallize.com:8000/staticfiles/assets/images/11.jpeg",
+  frase: "http://app.mentallize.com:8000/staticfiles/assets/images/13.png",
+  fraseMobile:
+    "http://app.mentallize.com:8000/staticfiles/assets/images/14.png",
+  loginBanner:
+    "http://app.mentallize.com:8000/staticfiles/assets/images/4.jpeg",
 };
