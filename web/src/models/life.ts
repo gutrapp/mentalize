@@ -4,13 +4,13 @@ export type Life = {
   total: number;
   espiritual: number;
   mente: number;
-  saúde: number;
+  saude: number;
   prosperidade: number;
   carreira: number;
   amor: number;
-  diversão: number;
+  diversao: number;
   dinheiro: number;
   disciplina: number;
   felicidade: number;
-  propósito: number;
+  proposito: number;
 };

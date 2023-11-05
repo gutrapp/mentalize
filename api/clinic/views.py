@@ -1,4 +1,4 @@
-from django.db.models import Exists, Q, OuterRef, Value, Subquery
+from django.db.models import Exists, Q, OuterRef
 from rest_framework import viewsets, status
 from django.http import QueryDict
 from django_filters.rest_framework.backends import DjangoFilterBackend
@@ -19,7 +19,7 @@ from tests.serializers import (
 )
 from tests.models import Mbti, LoveLanguage, Life, SelfKnowledge
 from account.serializers import PersonSerializer, UserSerializer
-from account.models import Person, User
+from account.models import Person
 
 
 class ClinicViews(viewsets.ModelViewSet):
@@ -111,18 +111,18 @@ class ClinicViews(viewsets.ModelViewSet):
             keys = person.result_set.all()
             for key in keys:
                 if key.test == Result.MBTI and key.testTaken == Result.USADO:
-                    exclude.append(key)
+                    exclude.append(key.id)
                     mbtis.append(MbtiSerializer(key.mbti).data)
                 if key.test == Result.SELF_KNOWLEDGE and key.testTaken == Result.USADO:
-                    exclude.append(key)
-                    sks.append(SelfKnowledge(key.selfknowledge).data)
+                    exclude.append(key.id)
+                    sks.append(SelfKnowledgeSerializer(key.self_knowledge).data)
                 if key.test == Result.LIFE and key.testTaken == Result.USADO:
-                    exclude.append(key)
-                    lifes.append(Life(key.life).data)
+                    exclude.append(key.id)
+                    lifes.append(LifeSerializer(key.life).data)
                 if key.test == Result.LOVE_LANGUAGE and key.testTaken == Result.USADO:
-                    exclude.append(key)
-                    lls.append(LoveLanguage(key.lovelanguage).data)
-            keys = keys.filter(~Q(id__in=[k.id for k in exclude]))
+                    exclude.append(key.id)
+                    lls.append(LoveLanguageSerializer(key.love_language).data)
+            keys = keys.filter(~Q(id__in=exclude))
 
             serializer = PersonSerializer(person)
             key_serializer = ResultSerializer(keys, many=True)
@@ -307,7 +307,7 @@ class ClinicViews(viewsets.ModelViewSet):
                         ),
                     ).values("id")
 
-                    lifes = Mbti.objects.filter(
+                    lifes = Life.objects.filter(
                         Q(clinic_id=pk),
                         Q(Exists(results_subquery)),
                         **life_filters,
@@ -345,7 +345,7 @@ class ClinicViews(viewsets.ModelViewSet):
                         ),
                     ).values("id")
 
-                    lls = Mbti.objects.filter(
+                    lls = LoveLanguage.objects.filter(
                         Q(clinic_id=pk),
                         Q(Exists(results_subquery)),
                         **lls_filters,
@@ -354,7 +354,7 @@ class ClinicViews(viewsets.ModelViewSet):
                     for ll in lls:
                         data.append(
                             {
-                                **LoveLanguage(ll).data,
+                                **LoveLanguageSerializer(ll).data,
                                 "result": ResultSerializer(ll.result).data,
                                 "user": UserSerializer(ll.result.person.user).data,
                             }
@@ -414,8 +414,7 @@ class ClinicViews(viewsets.ModelViewSet):
                 },
                 status=status.HTTP_200_OK,
             )
-        except Exception as e:
-            print(e)
+        except:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

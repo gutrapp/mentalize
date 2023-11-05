@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Layout } from "../../../components/Layout";
 import { MbtiTable } from "../../../components/ResultTables/mbti";
+import { SelfKnowledgeTable } from "../../../components/ResultTables/selfKnowledge";
+import { LoveLanguageTable } from "../../../components/ResultTables/loveLanguage";
+import { LifeTable } from "../../../components/ResultTables/life";
 
 export const Tests = () => {
   const [selectTest, setSelectTest] = useState<"MB" | "LI" | "LO" | "SK">("MB");
@@ -55,9 +58,9 @@ export const Tests = () => {
             </label>
           </div>
           {selectTest === "MB" && <MbtiTable />}
-          {selectTest === "SK" && <MbtiTable />}
-          {selectTest === "LO" && <MbtiTable />}
-          {selectTest === "LI" && <MbtiTable />}
+          {selectTest === "SK" && <SelfKnowledgeTable />}
+          {selectTest === "LO" && <LoveLanguageTable />}
+          {selectTest === "LI" && <LifeTable />}
         </div>
       </main>
     </Layout>

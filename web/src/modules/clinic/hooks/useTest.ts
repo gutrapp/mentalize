@@ -118,15 +118,15 @@ export const useTest = (
     },
     espiritual: 0,
     mente: 0,
-    saúde: 0,
+    saude: 0,
     prosperidade: 0,
     carreira: 0,
     amor: 0,
-    diversão: 0,
+    diversao: 0,
     dinheiro: 0,
     disciplina: 0,
     felicidade: 0,
-    propósito: 0,
+    proposito: 0,
   });
   const [selfKnowledge, setSelfKnowledge] = useState<ResponseSelfKnowledgeOne>({
     id: 0,

@@ -14,7 +14,7 @@ export type GetTest = {
   test: string;
 };
 
-export type Params = {
+export type ParamsMbti = {
   first: "AR" | "EA" | "" | "FI" | "WA";
   second: "AR" | "EA" | "" | "FI" | "WA";
   firstScore: string;
@@ -26,7 +26,56 @@ export type Params = {
   offset: string;
 };
 
+export type ParamsLife = {
+  average: string;
+  total: string;
+  full_name: string;
+  email: string;
+  key: string;
+  limit: string;
+  offset: string;
+};
+
+export type ParamsSelfKnowledge = {
+  first: "VI" | "AU" | "DI" | "KI" | "";
+  second: "VI" | "AU" | "DI" | "KI" | "";
+  firstScore: string;
+  secondScore: string;
+  full_name: string;
+  email: string;
+  key: string;
+  limit: string;
+  offset: string;
+};
+
+export type ParamsLoveLanguage = {
+  first: "AF" | "SE" | "PE" | "TI" | "TO" | "";
+  second: "AF" | "SE" | "PE" | "TI" | "TO" | "";
+  firstScore: string;
+  secondScore: string;
+  full_name: string;
+  email: string;
+  key: string;
+  limit: string;
+  offset: string;
+};
+
 export type ResponseMbti = Mbti & {
+  result: Key;
+  user: User;
+};
+
+export type ResponseLife = Life & {
+  result: Key;
+  user: User;
+};
+
+export type ResponseSelfKnowledge = SelfKnowledge & {
+  result: Key;
+  user: User;
+};
+
+export type ResponseLoveLanguage = LoveLanguage & {
   result: Key;
   user: User;
 };

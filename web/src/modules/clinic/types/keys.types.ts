@@ -46,24 +46,12 @@ export type KeyTest = {
   seen: "VI" | "NV";
   created_at: string;
   expires_at: string;
-} & (
-  | {
-      test: "MB";
-      mbti: Mbti;
-    }
-  | {
-      test: "SK";
-      selfknowledge: SelfKnowledge;
-    }
-  | {
-      test: "LO";
-      lovelanguage: LoveLanguage;
-    }
-  | {
-      test: "LI";
-      life: Life;
-    }
-);
+  test: "MB" | "SK" | "LO" | "LI";
+  mbti: Mbti;
+  self_knowledge: SelfKnowledge;
+  love_language: LoveLanguage;
+  life: Life;
+};
 
 export type KeyResponse = KeyTest & {
   person: Person & {

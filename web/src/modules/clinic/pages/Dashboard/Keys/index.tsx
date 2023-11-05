@@ -111,239 +111,244 @@ export const Keys = () => {
 
   return (
     <Layout>
-      <main className="text-[#414042] m-5 bg-white rounded-md border h-full w-full px-5 py-5 mt-[80px]">
-        <h1 className="text-[#BB926B] text-4xl mb-10 font-bold">Chaves</h1>
-        <div className="mb-2 w-full flex justify-end gap-2">
-          {getCurrentAdmin().role === "A" && (
-            <Modal
-              label="Criar chave"
-              open={open}
-              Icon={AiOutlinePlus}
-              setOpen={setOpen}
-            >
-              <form
-                onSubmit={handleCreateKey}
-                className="flex flex-col items-start gap-[1.2rem] w-full"
+      <main className="w-full flex flex-col m-5 mt-[80px] gap-5 text-base font-medium">
+        <div className="text-[#414042] bg-white rounded-md border w-full p-5">
+          <h1 className="text-[#BB926B] text-4xl mb-10 font-bold">Chaves</h1>
+          <div className="mb-2 w-full flex justify-end gap-2">
+            {getCurrentAdmin().role === "A" && (
+              <Modal
+                label="Criar chave"
+                open={open}
+                Icon={AiOutlinePlus}
+                setOpen={setOpen}
               >
-                <h1 className="font-bold text-lg border-[#534559] border-b-2 w-full text-[#534559]">
-                  Informações da Pessoa:
-                </h1>
-                <Input
-                  title="CPF:"
-                  type="text"
-                  className="w-full"
-                  value={cpfFormatacao(personFilter.cpf)}
-                  onChange={(e) => {
-                    setPersonFilter({
-                      ...personFilter,
-                      cpf: e.target.value,
-                    });
-                  }}
-                />
-                <Input
-                  title="Email:"
-                  type="text"
-                  className="w-full"
-                  value={personFilter.email}
-                  onChange={(e) =>
-                    setPersonFilter({ ...personFilter, email: e.target.value })
-                  }
-                />
-                <h1 className="font-bold text-md border-[#534559] border-b-2 w-full text-[#534559]">
-                  Informações da Chave:
-                </h1>
-                <Input
-                  className="w-full"
-                  title="Chave:"
-                  type="text"
-                  value={key.key}
-                  onChange={(e) => {
-                    setKey({
-                      ...key,
-                      key: e.target.value,
-                    });
-                  }}
-                />
-                <Select
-                  title="Teste:"
-                  value={key.test}
-                  onChange={(e) => {
-                    setKey({
-                      ...key,
-                      test: e.target.value as "MB" | "SK" | "LO" | "LI",
-                    });
-                  }}
-                  choices={TEST_CHOICES_NO_EMPTY}
-                />
-                <div className="w-full flex items-center justify-center">
-                  <Button>Criar</Button>
-                </div>
-              </form>
-            </Modal>
-          )}
-          <Button onClick={filterKeys}>Filtrar</Button>
-          {getCurrentAdmin().role === "A" && (
-            <Button variant="secondary">Apagar chave(s)</Button>
-          )}
-        </div>
-        <DataTable>
-          <DataTableHead>
-            <DataTableHeadLabels>
-              <td rowSpan={2} className="border-r px-4 justify-center">
-                <BsSquare />
-              </td>
-              <td className="border-r px-2 pb-1">Usado:</td>
-              <td className="border-r px-2 pb-1">Pessoa:</td>
-              <td className="border-r px-2 pb-1">Chave:</td>
-              <td className="border-r px-2 pb-1">Teste:</td>
-              <td className="border-r px-2 pb-1">Review:</td>
-              <td className="border-r px-2 pb-1">Vencido:</td>
-              <td className="border-r px-2 pb-1">Dia de vencimento:</td>
-            </DataTableHeadLabels>
-            <DataTableHeadFilters>
-              <td className="border-r px-2 pb-1">
-                <DataTableSelect
-                  choices={USABILITY_CHOICES}
-                  value={params.testTaken}
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      testTaken: e.target.value as "US" | "NU" | "",
-                    })
-                  }
-                />
-              </td>
-              <td className="border-r px-2 pb-1">
-                <DataTableInput
-                  value={params.person__user__full_name}
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      person__user__full_name: e.target.value,
-                    })
-                  }
-                />
-              </td>
-              <td className="border-r px-2 pb-1">
-                <DataTableInput
-                  value={params.key}
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      key: e.target.value,
-                    })
-                  }
-                />
-              </td>
-              <td className="border-r px-2 pb-1">
-                <DataTableSelect
-                  choices={TEST_CHOICES}
-                  value={params.test}
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      test: e.target.value as "MB" | "SK" | "LO" | "LI" | "",
-                    })
-                  }
-                />
-              </td>
-              <td className="border-r px-2 pb-1">
-                <DataTableSelect
-                  choices={REVIEW_CHOICES}
-                  value={params.seen}
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      seen: e.target.value as "VI" | "" | "NV",
-                    })
-                  }
-                />
-              </td>
-              <td className="border-r px-2 pb-1">
-                <DataTableSelect
-                  choices={EXPIRATION_CHOICES}
-                  value={params.expired}
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      expired: e.target.value as "EX" | "" | "VA",
-                    })
-                  }
-                />
-              </td>
-              <td className="border-r">
-                <DataTableInput
-                  value={params.expires_at}
-                  onChange={(e) =>
-                    setParams({
-                      ...params,
-                      expires_at: e.target.value,
-                    })
-                  }
-                />
-              </td>
-            </DataTableHeadFilters>
-          </DataTableHead>
-          <DataTableBody>
-            {keys.map((key, index) => (
-              <tr key={index}>
-                <td className="border pl-4 justify-center">
+                <form
+                  onSubmit={handleCreateKey}
+                  className="flex flex-col items-start gap-[1.2rem] w-full"
+                >
+                  <h1 className="font-bold text-lg border-[#534559] border-b-2 w-full text-[#534559]">
+                    Informações da Pessoa:
+                  </h1>
+                  <Input
+                    title="CPF:"
+                    type="text"
+                    className="w-full"
+                    value={cpfFormatacao(personFilter.cpf)}
+                    onChange={(e) => {
+                      setPersonFilter({
+                        ...personFilter,
+                        cpf: e.target.value,
+                      });
+                    }}
+                  />
+                  <Input
+                    title="Email:"
+                    type="text"
+                    className="w-full"
+                    value={personFilter.email}
+                    onChange={(e) =>
+                      setPersonFilter({
+                        ...personFilter,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                  <h1 className="font-bold text-md border-[#534559] border-b-2 w-full text-[#534559]">
+                    Informações da Chave:
+                  </h1>
+                  <Input
+                    className="w-full"
+                    title="Chave:"
+                    type="text"
+                    value={key.key}
+                    onChange={(e) => {
+                      setKey({
+                        ...key,
+                        key: e.target.value,
+                      });
+                    }}
+                  />
+                  <Select
+                    title="Teste:"
+                    value={key.test}
+                    onChange={(e) => {
+                      setKey({
+                        ...key,
+                        test: e.target.value as "MB" | "SK" | "LO" | "LI",
+                      });
+                    }}
+                    choices={TEST_CHOICES_NO_EMPTY}
+                  />
+                  <div className="w-full flex items-center justify-center">
+                    <Button>Criar</Button>
+                  </div>
+                </form>
+              </Modal>
+            )}
+            <Button onClick={filterKeys}>Filtrar</Button>
+            {getCurrentAdmin().role === "A" && (
+              <Button variant="secondary">Apagar chave(s)</Button>
+            )}
+          </div>
+          <DataTable>
+            <DataTableHead>
+              <DataTableHeadLabels>
+                <td rowSpan={2} className="border-r px-4 justify-center">
                   <BsSquare />
                 </td>
-                <td
-                  className="text-center border"
-                  onClick={() => handleKeyRedirect(key)}
-                >
-                  {USABILITY_DICT[key.testTaken]}
+                <td className="border-r px-2 pb-1">Usado:</td>
+                <td className="border-r px-2 pb-1">Pessoa:</td>
+                <td className="border-r px-2 pb-1">Chave:</td>
+                <td className="border-r px-2 pb-1">Teste:</td>
+                <td className="border-r px-2 pb-1">Review:</td>
+                <td className="border-r px-2 pb-1">Vencido:</td>
+                <td className="border-r px-2 pb-1">Dia de vencimento:</td>
+              </DataTableHeadLabels>
+              <DataTableHeadFilters>
+                <td className="border-r px-2 pb-1">
+                  <DataTableSelect
+                    choices={USABILITY_CHOICES}
+                    value={params.testTaken}
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        testTaken: e.target.value as "US" | "NU" | "",
+                      })
+                    }
+                  />
                 </td>
-                <td
-                  className="text-center border"
-                  onClick={() => handleKeyRedirect(key)}
-                >
-                  {key.person.user.full_name}
+                <td className="border-r px-2 pb-1">
+                  <DataTableInput
+                    value={params.person__user__full_name}
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        person__user__full_name: e.target.value,
+                      })
+                    }
+                  />
                 </td>
-                <td
-                  className="text-center border"
-                  onClick={() => handleKeyRedirect(key)}
-                >
-                  {key.key}
+                <td className="border-r px-2 pb-1">
+                  <DataTableInput
+                    value={params.key}
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        key: e.target.value,
+                      })
+                    }
+                  />
                 </td>
-                <td
-                  className="text-center border"
-                  onClick={() => handleKeyRedirect(key)}
-                >
-                  {TEST_DICT[key.test]}
+                <td className="border-r px-2 pb-1">
+                  <DataTableSelect
+                    choices={TEST_CHOICES}
+                    value={params.test}
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        test: e.target.value as "MB" | "SK" | "LO" | "LI" | "",
+                      })
+                    }
+                  />
                 </td>
-                <td
-                  className="text-center border"
-                  onClick={() => handleKeyRedirect(key)}
-                >
-                  {REVIEW_DICT[key.seen]}
+                <td className="border-r px-2 pb-1">
+                  <DataTableSelect
+                    choices={REVIEW_CHOICES}
+                    value={params.seen}
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        seen: e.target.value as "VI" | "" | "NV",
+                      })
+                    }
+                  />
                 </td>
-                <td
-                  className="text-center border"
-                  onClick={() => handleKeyRedirect(key)}
-                >
-                  {EXPIRATION_DICT[key.expired]}
+                <td className="border-r px-2 pb-1">
+                  <DataTableSelect
+                    choices={EXPIRATION_CHOICES}
+                    value={params.expired}
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        expired: e.target.value as "EX" | "" | "VA",
+                      })
+                    }
+                  />
                 </td>
-                <td
-                  className="text-center border"
-                  onClick={() => handleKeyRedirect(key)}
-                >
-                  {key.expires_at}
+                <td className="border-r">
+                  <DataTableInput
+                    value={params.expires_at}
+                    onChange={(e) =>
+                      setParams({
+                        ...params,
+                        expires_at: e.target.value,
+                      })
+                    }
+                  />
                 </td>
-              </tr>
-            ))}
-          </DataTableBody>
-          <DataTableFooter
-            value={params.limit}
-            resource="chaves"
-            colSpan={6}
-            onChange={(e) => setParams({ ...params, limit: e.target.value })}
-            choices={PAGINATION_CHOICES}
-            variant="min-w"
-          />
-        </DataTable>
+              </DataTableHeadFilters>
+            </DataTableHead>
+            <DataTableBody>
+              {keys.map((key, index) => (
+                <tr key={index}>
+                  <td className="border pl-4 justify-center">
+                    <BsSquare />
+                  </td>
+                  <td
+                    className="text-center border"
+                    onClick={() => handleKeyRedirect(key)}
+                  >
+                    {USABILITY_DICT[key.testTaken]}
+                  </td>
+                  <td
+                    className="text-center border"
+                    onClick={() => handleKeyRedirect(key)}
+                  >
+                    {key.person.user.full_name}
+                  </td>
+                  <td
+                    className="text-center border"
+                    onClick={() => handleKeyRedirect(key)}
+                  >
+                    {key.key}
+                  </td>
+                  <td
+                    className="text-center border"
+                    onClick={() => handleKeyRedirect(key)}
+                  >
+                    {TEST_DICT[key.test]}
+                  </td>
+                  <td
+                    className="text-center border"
+                    onClick={() => handleKeyRedirect(key)}
+                  >
+                    {REVIEW_DICT[key.seen]}
+                  </td>
+                  <td
+                    className="text-center border"
+                    onClick={() => handleKeyRedirect(key)}
+                  >
+                    {EXPIRATION_DICT[key.expired]}
+                  </td>
+                  <td
+                    className="text-center border"
+                    onClick={() => handleKeyRedirect(key)}
+                  >
+                    {key.expires_at}
+                  </td>
+                </tr>
+              ))}
+            </DataTableBody>
+            <DataTableFooter
+              value={params.limit}
+              resource="chaves"
+              colSpan={6}
+              onChange={(e) => setParams({ ...params, limit: e.target.value })}
+              choices={PAGINATION_CHOICES}
+              variant="min-w"
+            />
+          </DataTable>
+        </div>
       </main>
     </Layout>
   );

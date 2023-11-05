@@ -1,14 +1,11 @@
 import { SetStateAction, useContext, useEffect, useState } from "react";
 import api from "../../../../../api/api.config";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MBTI_DICT } from "../../../../../helpers/dict.helper";
 import { Button } from "../../../../../components/Button/Button";
 import { Layout } from "../../../../../components/Layout";
 import { KeyContext } from "../../../context/KeyContext";
 import { BiLogOutCircle } from "react-icons/bi";
-import { ClinicContext } from "../../../../../context/ClinicContext";
-
-const TEXTS = {};
 
 const WORDS = [
   {
@@ -525,7 +522,7 @@ const Result = ({ values }: ResultProps) => {
     });
 
     async function createResultMbti() {
-      await api.post(`create_result`, {
+      await api.post(`result/create_result`, {
         mbti: {
           ...data,
           result: getCurrentKey().id,

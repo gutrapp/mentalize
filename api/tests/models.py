@@ -48,21 +48,21 @@ class Result(models.Model):
 
 
 class Life(models.Model):
-    average = models.DecimalField(max_digits=5, decimal_places=2)
+    average = models.DecimalField(max_digits=5, decimal_places=3)
     total = models.IntegerField()
     result = models.OneToOneField(Result, on_delete=models.CASCADE)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     espiritual = models.IntegerField()
     mente = models.IntegerField()
-    saúde = models.IntegerField()
+    saude = models.IntegerField()
     prosperidade = models.IntegerField()
     carreira = models.IntegerField()
     amor = models.IntegerField()
-    diversão = models.IntegerField()
+    diversao = models.IntegerField()
     dinheiro = models.IntegerField()
     disciplina = models.IntegerField()
     felicidade = models.IntegerField()
-    propósito = models.IntegerField()
+    proposito = models.IntegerField()
 
 
 class SelfKnowledge(models.Model):
@@ -85,7 +85,9 @@ class SelfKnowledge(models.Model):
     secondScore = models.DecimalField(max_digits=5, decimal_places=2)
     thirdScore = models.DecimalField(max_digits=5, decimal_places=2)
     fourthScore = models.DecimalField(max_digits=5, decimal_places=2)
-    result = models.OneToOneField(Result, on_delete=models.CASCADE)
+    result = models.OneToOneField(
+        Result, on_delete=models.CASCADE, related_name="self_knowledge"
+    )
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
 
 
@@ -113,7 +115,9 @@ class LoveLanguage(models.Model):
     thirdScore = models.DecimalField(max_digits=5, decimal_places=2)
     fourthScore = models.DecimalField(max_digits=5, decimal_places=2)
     fifthScore = models.DecimalField(max_digits=5, decimal_places=2)
-    result = models.OneToOneField(Result, on_delete=models.CASCADE)
+    result = models.OneToOneField(
+        Result, on_delete=models.CASCADE, related_name="love_language"
+    )
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
 
 

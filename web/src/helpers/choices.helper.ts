@@ -46,6 +46,23 @@ export const MBTI_CHOICES_EMPTY = [
   { value: "WA", choice: "Água" },
 ];
 
+export const SK_CHOICES_EMPTY = [
+  { choice: "", value: "" },
+  { value: "VI", choice: "Visual" },
+  { value: "KI", choice: "Cinestésico" },
+  { value: "AU", choice: "Auditivo" },
+  { value: "DI", choice: "Digital" },
+];
+
+export const LO_CHOICES_EMPTY = [
+  { choice: "", value: "" },
+  { value: "AF", choice: "Afirmação" },
+  { value: "SE", choice: "Serviço" },
+  { value: "PE", choice: "Presentes" },
+  { value: "TI", choice: "Tempo" },
+  { value: "TO", choice: "Toque" },
+];
+
 export const TELEFONE_CHOICES = [
   {
     value: "MO",

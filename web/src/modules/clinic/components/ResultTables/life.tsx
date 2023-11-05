@@ -9,35 +9,29 @@ import { DataTableHead } from "../../../../components/DataTable/DataTableHead";
 import { DataTableHeadFilters } from "../../../../components/DataTable/DataTableHead/DataTableHeadFilters";
 import { DataTableHeadLabels } from "../../../../components/DataTable/DataTableHead/DataTableHeadLabels";
 import { DataTableInput } from "../../../../components/DataTable/Input";
-import { DataTableSelect } from "../../../../components/DataTable/Select";
-import {
-  MBTI_CHOICES_EMPTY,
-  PAGINATION_CHOICES,
-} from "../../../../helpers/choices.helper";
+import { PAGINATION_CHOICES } from "../../../../helpers/choices.helper";
 import { MBTI_DICT } from "../../../../helpers/dict.helper";
-import { useMbtis } from "../../hooks/useTests";
+import { useLife } from "../../hooks/useTests";
 import { Redirect } from "../../types/keys.types";
-import { ParamsMbti } from "../../types/tests.type";
+import { ParamsLife } from "../../types/tests.type";
 
-export const MbtiTable = () => {
+export const LifeTable = () => {
   const router = useNavigate();
 
-  const [params, setParams] = useState<ParamsMbti>({
-    first: "",
-    second: "",
-    firstScore: "",
-    secondScore: "",
+  const [params, setParams] = useState<ParamsLife>({
     full_name: "",
     email: "",
     key: "",
     limit: "25",
     offset: "0",
+    average: "",
+    total: "",
   });
 
-  const { tests, filterTests } = useMbtis(params);
+  const { tests, filterTests } = useLife(params);
 
   const handleTestRedirect = ({ id }: Redirect) => {
-    router(`/clinic/tests/${id}/MB`);
+    router(`/clinic/tests/${id}/LO`);
   };
 
   return (
@@ -54,10 +48,8 @@ export const MbtiTable = () => {
             <td className="border-r px-2 pb-1">Nome:</td>
             <td className="border-r px-2 pb-1">Email:</td>
             <td className="border-r px-2 pb-1">Chave:</td>
-            <td className="border-r px-2 pb-1">Dominante:</td>
-            <td className="border-r px-2 pb-1">Sub-dominante:</td>
-            <td className="border-r px-2 pb-1">Porcentagem Dominante:</td>
-            <td className="border-r px-2 pb-1">Porcentagem Sub-dominante:</td>
+            <td className="border-r px-2 pb-1">Total:</td>
+            <td className="border-r px-2 pb-1">Média:</td>
           </DataTableHeadLabels>
           <DataTableHeadFilters>
             <td className="border-r px-2 pb-1">
@@ -94,48 +86,23 @@ export const MbtiTable = () => {
               />
             </td>
             <td className="border-r px-2 pb-1">
-              <DataTableSelect
-                choices={MBTI_CHOICES_EMPTY}
-                value={params.first}
+              <DataTableInput
+                value={params.total}
                 onChange={(e) =>
                   setParams({
                     ...params,
-                    first: e.target.value as "AR" | "EA" | "" | "FI" | "WA",
-                  })
-                }
-              />
-            </td>
-
-            <td className="border-r px-2 pb-1">
-              <DataTableSelect
-                choices={MBTI_CHOICES_EMPTY}
-                value={params.second}
-                onChange={(e) =>
-                  setParams({
-                    ...params,
-                    second: e.target.value as "AR" | "EA" | "" | "FI" | "WA",
+                    total: e.target.value,
                   })
                 }
               />
             </td>
             <td className="border-r px-2 pb-1">
               <DataTableInput
-                value={params.firstScore}
+                value={params.average}
                 onChange={(e) =>
                   setParams({
                     ...params,
-                    firstScore: e.target.value,
-                  })
-                }
-              />
-            </td>
-            <td className="border-r px-2 pb-1">
-              <DataTableInput
-                value={params.secondScore}
-                onChange={(e) =>
-                  setParams({
-                    ...params,
-                    secondScore: e.target.value,
+                    average: e.target.value,
                   })
                 }
               />
@@ -170,25 +137,13 @@ export const MbtiTable = () => {
                 className="text-center border"
                 onClick={() => handleTestRedirect(test)}
               >
-                {MBTI_DICT[test.first]}
+                {test.total}
               </td>
               <td
                 className="text-center border"
                 onClick={() => handleTestRedirect(test)}
               >
-                {MBTI_DICT[test.second]}
-              </td>
-              <td
-                className="text-center border"
-                onClick={() => handleTestRedirect(test)}
-              >
-                {test.firstScore} %
-              </td>
-              <td
-                className="text-center border"
-                onClick={() => handleTestRedirect(test)}
-              >
-                {test.secondScore} %
+                {test.average}
               </td>
             </tr>
           ))}

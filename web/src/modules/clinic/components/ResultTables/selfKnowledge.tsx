@@ -11,18 +11,18 @@ import { DataTableHeadLabels } from "../../../../components/DataTable/DataTableH
 import { DataTableInput } from "../../../../components/DataTable/Input";
 import { DataTableSelect } from "../../../../components/DataTable/Select";
 import {
-  MBTI_CHOICES_EMPTY,
+  SK_CHOICES_EMPTY,
   PAGINATION_CHOICES,
 } from "../../../../helpers/choices.helper";
-import { MBTI_DICT } from "../../../../helpers/dict.helper";
-import { useMbtis } from "../../hooks/useTests";
+import { SK_DICT } from "../../../../helpers/dict.helper";
+import { useSelfKnowledge } from "../../hooks/useTests";
 import { Redirect } from "../../types/keys.types";
-import { ParamsMbti } from "../../types/tests.type";
+import { ParamsSelfKnowledge } from "../../types/tests.type";
 
-export const MbtiTable = () => {
+export const SelfKnowledgeTable = () => {
   const router = useNavigate();
 
-  const [params, setParams] = useState<ParamsMbti>({
+  const [params, setParams] = useState<ParamsSelfKnowledge>({
     first: "",
     second: "",
     firstScore: "",
@@ -34,10 +34,10 @@ export const MbtiTable = () => {
     offset: "0",
   });
 
-  const { tests, filterTests } = useMbtis(params);
+  const { tests, filterTests } = useSelfKnowledge(params);
 
   const handleTestRedirect = ({ id }: Redirect) => {
-    router(`/clinic/tests/${id}/MB`);
+    router(`/clinic/tests/${id}/SK`);
   };
 
   return (
@@ -56,8 +56,8 @@ export const MbtiTable = () => {
             <td className="border-r px-2 pb-1">Chave:</td>
             <td className="border-r px-2 pb-1">Dominante:</td>
             <td className="border-r px-2 pb-1">Sub-dominante:</td>
-            <td className="border-r px-2 pb-1">Porcentagem Dominante:</td>
-            <td className="border-r px-2 pb-1">Porcentagem Sub-dominante:</td>
+            <td className="border-r px-2 pb-1">Pontuação Dominante:</td>
+            <td className="border-r px-2 pb-1">Pontuação Sub-dominante:</td>
           </DataTableHeadLabels>
           <DataTableHeadFilters>
             <td className="border-r px-2 pb-1">
@@ -95,12 +95,12 @@ export const MbtiTable = () => {
             </td>
             <td className="border-r px-2 pb-1">
               <DataTableSelect
-                choices={MBTI_CHOICES_EMPTY}
+                choices={SK_CHOICES_EMPTY}
                 value={params.first}
                 onChange={(e) =>
                   setParams({
                     ...params,
-                    first: e.target.value as "AR" | "EA" | "" | "FI" | "WA",
+                    first: e.target.value as "VI" | "AU" | "DI" | "KI" | "",
                   })
                 }
               />
@@ -108,12 +108,12 @@ export const MbtiTable = () => {
 
             <td className="border-r px-2 pb-1">
               <DataTableSelect
-                choices={MBTI_CHOICES_EMPTY}
+                choices={SK_CHOICES_EMPTY}
                 value={params.second}
                 onChange={(e) =>
                   setParams({
                     ...params,
-                    second: e.target.value as "AR" | "EA" | "" | "FI" | "WA",
+                    second: e.target.value as "VI" | "AU" | "DI" | "KI" | "",
                   })
                 }
               />
@@ -170,13 +170,13 @@ export const MbtiTable = () => {
                 className="text-center border"
                 onClick={() => handleTestRedirect(test)}
               >
-                {MBTI_DICT[test.first]}
+                {SK_DICT[test.first]}
               </td>
               <td
                 className="text-center border"
                 onClick={() => handleTestRedirect(test)}
               >
-                {MBTI_DICT[test.second]}
+                {SK_DICT[test.second]}
               </td>
               <td
                 className="text-center border"

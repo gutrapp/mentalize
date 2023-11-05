@@ -298,7 +298,7 @@ const LoveLanguageResultsDisplay = ({ lls }: { lls: LoveLanguage[] }) => {
       {lls.map((lls, i) => {
         return (
           <div
-            onClick={() => router(`/clinic/tests/${lls.id}/MB`)}
+            onClick={() => router(`/clinic/tests/${lls.id}/LO`)}
             key={i}
             className="group ring-2 ring-[#534559] hover:ring-[#BB926B] ring-offset-2 rounded-md p-2 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out"
           >
@@ -332,16 +332,17 @@ const LifeResultsDisplay = ({ lifes }: { lifes: Life[] }) => {
       {lifes.map((life, i) => {
         return (
           <div
-            onClick={() => router(`/clinic/tests/${life.id}/MB`)}
+            onClick={() => router(`/clinic/tests/${life.id}/LI`)}
             key={i}
             className="group ring-2 ring-[#534559] hover:ring-[#BB926B] ring-offset-2 rounded-md p-2 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out"
           >
             <h1 className="group-hover:text-[#BB926B] font-bold text-[#534559] text-lg duration-300 ease-in-out">
-              {life.total}
+              Estatísticas
             </h1>
-            <h1 className="group-hover:text-[#BB926B] font-bold text-[#534559] text-lg duration-300 ease-in-out">
-              {life.average}
-            </h1>
+            <label className="text-sm">Média: {life.average} %</label>
+            <p className="flex font-light text-sm items-center">
+              Total: {life.total}
+            </p>
           </div>
         );
       })}
@@ -367,7 +368,7 @@ const SelfKnowledgeResultsDisplay = ({ sks }: { sks: SelfKnowledge[] }) => {
       {sks.map((sk, i) => {
         return (
           <div
-            onClick={() => router(`/clinic/tests/${sk.id}/MB`)}
+            onClick={() => router(`/clinic/tests/${sk.id}/SK`)}
             key={i}
             className="group ring-2 ring-[#534559] hover:ring-[#BB926B] ring-offset-2 rounded-md p-2 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out"
           >

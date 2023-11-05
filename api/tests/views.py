@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
+from rest_framework.decorators import action
 
 from .models import Result, Life, LoveLanguage, Mbti, SelfKnowledge
 from .filters import (
@@ -20,7 +21,6 @@ from .serializers import (
     MbtiSerializer,
     ResultSerializer,
 )
-from clinic.models import Clinic
 
 
 class ResultViews(viewsets.ModelViewSet):
@@ -31,6 +31,7 @@ class ResultViews(viewsets.ModelViewSet):
     ordering_fields = "__all__"
     ordering = ["id"]
 
+    @action(detail=False, methods=["POST"], name="Get clinics people")
     def create_result(self, request: Request, *args, **kwargs) -> Response:
         try:
             result = request.data.get("result")
@@ -43,16 +44,16 @@ class ResultViews(viewsets.ModelViewSet):
                     if mbti.is_valid():
                         mbti.save()
                 if result["test"] == "SK":
-                    sk = SelfKnowledge(data=request.data.get("sk"))
-                    if sk.is_valid():
+                    sk = SelfKnowledgeSerializer(data=request.data.get("sk"))
+                    if sk.is_valid(raise_exception=True):
                         sk.save()
                 if result["test"] == "LO":
                     ll = LoveLanguageSerializer(data=request.data.get("ll"))
-                    if ll.is_valid():
+                    if ll.is_valid(raise_exception=True):
                         ll.save()
-                if result["test"] == "life":
+                if result["test"] == "LI":
                     life = LifeSerializer(data=request.data.get("life"))
-                    if life.is_valid():
+                    if life.is_valid(raise_exception=True):
                         life.save()
                 instance = Result.objects.get(id=result.pop("id"))
                 updated_result = ResultSerializer(
@@ -61,8 +62,7 @@ class ResultViews(viewsets.ModelViewSet):
                 if updated_result.is_valid(raise_exception=True):
                     updated_result.save()
             return Response(status=status.HTTP_200_OK)
-        except Exception as e:
-            print(e)
+        except:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

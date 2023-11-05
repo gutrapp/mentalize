@@ -17,6 +17,9 @@ import {
   cpfFormatacao,
 } from "../../../../../helpers/formatters.helper";
 import { MbtiResultSimplified } from "../../../components/SimplifiedResults/mbti";
+import { SelfKnowledgeResultSimplified } from "../../../components/SimplifiedResults/selfKnowledge";
+import { LoveLanguageResultSimplified } from "../../../components/SimplifiedResults/loveLanguage";
+import { LifeResultSimplified } from "../../../components/SimplifiedResults/life";
 
 export const Key = () => {
   const router = useNavigate();
@@ -240,10 +243,12 @@ export const Key = () => {
                     router(`/clinic/tests/${key.life.id}/${key.test}`);
                     break;
                   case "LO":
-                    router(`/clinic/tests/${key.lovelanguage.id}/${key.test}`);
+                    router(`/clinic/tests/${key.love_language.id}/${key.test}`);
                     break;
                   case "SK":
-                    router(`/clinic/tests/${key.selfknowledge.id}/${key.test}`);
+                    router(
+                      `/clinic/tests/${key.self_knowledge.id}/${key.test}`
+                    );
                     break;
                 }
               }}
@@ -257,6 +262,9 @@ export const Key = () => {
               </p>
             </div>
             {key.test === "MB" && <MbtiResultSimplified data={key} />}
+            {key.test === "SK" && <SelfKnowledgeResultSimplified data={key} />}
+            {key.test === "LO" && <LoveLanguageResultSimplified data={key} />}
+            {key.test === "LI" && <LifeResultSimplified data={key} />}
           </div>
         )}
       </main>

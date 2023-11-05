@@ -14,15 +14,15 @@ import {
   MBTI_CHOICES_EMPTY,
   PAGINATION_CHOICES,
 } from "../../../../helpers/choices.helper";
-import { MBTI_DICT } from "../../../../helpers/dict.helper";
-import { useMbtis } from "../../hooks/useTests";
+import { LO_DICT } from "../../../../helpers/dict.helper";
+import { useLoveLanguages } from "../../hooks/useTests";
 import { Redirect } from "../../types/keys.types";
-import { ParamsMbti } from "../../types/tests.type";
+import { ParamsLoveLanguage } from "../../types/tests.type";
 
-export const MbtiTable = () => {
+export const LoveLanguageTable = () => {
   const router = useNavigate();
 
-  const [params, setParams] = useState<ParamsMbti>({
+  const [params, setParams] = useState<ParamsLoveLanguage>({
     first: "",
     second: "",
     firstScore: "",
@@ -34,10 +34,10 @@ export const MbtiTable = () => {
     offset: "0",
   });
 
-  const { tests, filterTests } = useMbtis(params);
+  const { tests, filterTests } = useLoveLanguages(params);
 
   const handleTestRedirect = ({ id }: Redirect) => {
-    router(`/clinic/tests/${id}/MB`);
+    router(`/clinic/tests/${id}/LO`);
   };
 
   return (
@@ -56,8 +56,8 @@ export const MbtiTable = () => {
             <td className="border-r px-2 pb-1">Chave:</td>
             <td className="border-r px-2 pb-1">Dominante:</td>
             <td className="border-r px-2 pb-1">Sub-dominante:</td>
-            <td className="border-r px-2 pb-1">Porcentagem Dominante:</td>
-            <td className="border-r px-2 pb-1">Porcentagem Sub-dominante:</td>
+            <td className="border-r px-2 pb-1">Pontuação Dominante:</td>
+            <td className="border-r px-2 pb-1">Pontuação Sub-dominante:</td>
           </DataTableHeadLabels>
           <DataTableHeadFilters>
             <td className="border-r px-2 pb-1">
@@ -100,7 +100,13 @@ export const MbtiTable = () => {
                 onChange={(e) =>
                   setParams({
                     ...params,
-                    first: e.target.value as "AR" | "EA" | "" | "FI" | "WA",
+                    first: e.target.value as
+                      | "AF"
+                      | "SE"
+                      | "PE"
+                      | "TI"
+                      | "TO"
+                      | "",
                   })
                 }
               />
@@ -113,7 +119,13 @@ export const MbtiTable = () => {
                 onChange={(e) =>
                   setParams({
                     ...params,
-                    second: e.target.value as "AR" | "EA" | "" | "FI" | "WA",
+                    second: e.target.value as
+                      | "AF"
+                      | "SE"
+                      | "PE"
+                      | "TI"
+                      | "TO"
+                      | "",
                   })
                 }
               />
@@ -170,13 +182,13 @@ export const MbtiTable = () => {
                 className="text-center border"
                 onClick={() => handleTestRedirect(test)}
               >
-                {MBTI_DICT[test.first]}
+                {LO_DICT[test.first]}
               </td>
               <td
                 className="text-center border"
                 onClick={() => handleTestRedirect(test)}
               >
-                {MBTI_DICT[test.second]}
+                {LO_DICT[test.second]}
               </td>
               <td
                 className="text-center border"
