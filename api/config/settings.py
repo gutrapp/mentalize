@@ -56,9 +56,9 @@ TEMPLATES = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = ["app.mentallize.com"]
+CORS_ALLOWED_ORIGINS = ["http://app.mentallize.com"]
 
-CSRF_TRUSTED_ORIGINS = ["app.mentallize.com"]
+CSRF_TRUSTED_ORIGINS = ["http://app.mentallize.com"]
 
 CORS_ALLOW_CREDENTIALS = True
 
