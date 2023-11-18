@@ -5,9 +5,9 @@ ENV DJANGO_SETTINGS_MODULE config.settings
 ENV DEBUG=False
 ENV DJANGO_SECRET="g8j0)^%t7!v4_yq1sk8$8r=rlbqbc0zi$=2mr&t9)v)5%i+xoh"
 ENV DB_NAME="mentalize"
-ENV DB_USER="postgres"
+ENV DB_USER="gustavo"
 ENV DB_PASSWORD="99831745gusta"
-ENV DB_HOST="85.31.230.250"
+ENV DB_HOST="localhost"
 ENV DB_PORT="5432"
 
 RUN pip install poetry
