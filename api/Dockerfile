@@ -20,6 +20,7 @@ RUN poetry config virtualenvs.create false && \
 
 COPY . /app/
 
+RUN python manage.py makemigrations account
 RUN python manage.py makemigrations
 RUN python manage.py migrate account
 RUN python manage.py migrate
