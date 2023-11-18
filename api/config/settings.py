@@ -56,9 +56,9 @@ TEMPLATES = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://app.mentallize.com:80"]
+CORS_ALLOWED_ORIGINS = ["http://app.mentallize.com"]
 
-CSRF_TRUSTED_ORIGINS = ["http://app.mentallize.com:80"]
+CSRF_TRUSTED_ORIGINS = ["http://app.mentallize.com"]
 
 CSRF_COOKIE_NAME = "csrftoken"
 
