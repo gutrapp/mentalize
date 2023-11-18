@@ -43,7 +43,7 @@ export const AdminLogin = () => {
 
   return (
     <main className="max-h-full min-h-screen w-full flex justify-center flex-col gap-4 items-center text-[#414042] px-2 py-7 xl:px-0 xl:py-0">
-      <h1 className="text-3xl font-bold text-[#BB926B]">Login</h1>
+      <h1 className="text-3xl font-bold text-[#BB926B]">Administradora</h1>
       <form
         className="flex flex-col justify-center items-center gap-[2.5rem] rounded-md px-10 py-7 shadow-2xl border"
         onSubmit={(e) => handleLoginAdmin(e)}
