@@ -60,7 +60,7 @@ CORS_ALLOWED_ORIGINS = ["http://app.mentallize.com"]
 
 CSRF_TRUSTED_ORIGINS = ["http://app.mentallize.com"]
 
-CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"
+CSRF_COOKIE_NAME = "csrftoken"
 
 CORS_ALLOW_CREDENTIALS = True
 
