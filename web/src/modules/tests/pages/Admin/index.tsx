@@ -26,9 +26,9 @@ export const AdminLogin = () => {
     e.preventDefault();
 
     try {
-      return api.get("auth/csrf").then((response) => {
+      return api.get("auth/csrf").then(async (response) => {
         if (response.status !== 200) throw new Error(response.statusText);
-        api.post("auth/login", data).then((response) => {
+        await api.post("auth/login", data).then((response) => {
           if (response.status !== 200) throw new Error(response.statusText);
           const { id, group, role } = response.data;
           setCurrentAdmin({ id, group, role });
