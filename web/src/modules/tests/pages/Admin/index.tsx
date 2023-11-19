@@ -30,7 +30,7 @@ export const AdminLogin = () => {
       return api.get("auth/csrf").then(async (response) => {
         if (response.status !== 200) throw new Error(response.statusText);
         await api
-          .post("auth/login", { ...data, csrf_token: Cookies.get("csrftoken") })
+          .post("auth/login", { ...data, csrftoken: Cookies.get("csrftoken") })
           .then((response) => {
             if (response.status !== 200) throw new Error(response.statusText);
             const { id, group, role } = response.data;
