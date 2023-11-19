@@ -4,6 +4,7 @@ import { Input } from "../../../../components/Input";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../../../../context/AdminContext";
 import api from "../../../../api/api.config";
+import Cookies from "js-cookie";
 
 type LoginData = {
   email: string;
@@ -28,12 +29,14 @@ export const AdminLogin = () => {
     try {
       return api.get("auth/csrf").then(async (response) => {
         if (response.status !== 200) throw new Error(response.statusText);
-        await api.post("auth/login", data).then((response) => {
-          if (response.status !== 200) throw new Error(response.statusText);
-          const { id, group, role } = response.data;
-          setCurrentAdmin({ id, group, role });
-          router("/clinic");
-        });
+        await api
+          .post("auth/login", { ...data, csrf_token: Cookies.get("csrftoken") })
+          .then((response) => {
+            if (response.status !== 200) throw new Error(response.statusText);
+            const { id, group, role } = response.data;
+            setCurrentAdmin({ id, group, role });
+            router("/clinic");
+          });
       });
     } catch (error) {
       setError("Erro ao fazer login");
