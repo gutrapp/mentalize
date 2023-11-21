@@ -8,9 +8,9 @@ export const getClinics = async ({ group }: Admin): Promise<Clinic[]> => {
       case "C":
         return api
           .get("clinic/admin_clinics")
-          .then((response) => response.data);
+          .then((response) => response.data.result);
       case "G":
-        return api.get("clinic").then((response) => response.data);
+        return api.get("clinic").then((response) => response.data.result);
     }
   } catch (error) {
     return Promise.reject();
