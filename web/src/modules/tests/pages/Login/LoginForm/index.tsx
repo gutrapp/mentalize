@@ -4,6 +4,7 @@ import api from "../../../../../api/api.config";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../../../../components/Button/Button";
 import { PersonContext } from "../../../../../context/PersonContext";
+import Cookies from "js-cookie";
 
 type LoginData = {
   email: string;
@@ -27,10 +28,14 @@ export const LoginForm = () => {
     await api
       .get("auth/csrf")
       .then(() =>
-        api.post("auth/login", data).then((response) => {
-          if (response.status === 200) setCurrentPerson(response.data);
-          else setError("Erro ao fazer login");
-        })
+        api
+          .post("auth/login", data, {
+            headers: { "X-CSRFToken": Cookies.get("csrftoken") },
+          })
+          .then((response) => {
+            if (response.status === 200) setCurrentPerson(response.data);
+            else setError("Erro ao fazer login");
+          })
       )
       .then(() => router("/tests"));
   };
