@@ -14,9 +14,13 @@ export const AuthNavItems = () => {
 
   useEffect(() => {
     async function useSession() {
-      await api.get("auth/session").then((response) => {
-        if (response.status === 200) setUser(!user);
-      });
+      await api
+        .get("auth/session", {
+          headers: { "X-CSRFToken": Cookies.get("csrftoken") },
+        })
+        .then((response) => {
+          if (response.status === 200) setUser(!user);
+        });
     }
 
     useSession();
